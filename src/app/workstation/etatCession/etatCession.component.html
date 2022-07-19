@@ -1,0 +1,7 @@
+<ng-container>
+  <app-etat-cession-form *ngIf="etatCession && formConfig"
+  [etatCession]="etatCession" [config]="formConfig" (calculButtonClicked)="calculTotal($event)"
+  (cancelButtonClicked)="cancel($event)" [readOnly]="formVariables.isReadOnly || this.accessedByRouter" (saveButtonClicked)="save($event)">
+  </app-etat-cession-form>
+</ng-container>
+

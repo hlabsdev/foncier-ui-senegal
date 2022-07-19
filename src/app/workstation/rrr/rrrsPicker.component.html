@@ -1,0 +1,69 @@
+<div class="container-fluid px-0">
+  <!-- header -->
+  <div class="row no-gutters px-3">
+    <!-- title -->
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{ 'RRRS_PICKER.TITLE' | translate}}</h1>
+    </div>
+  </div>
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <p-table [value]="regRRRs" [resizableColumns]="true" [columns]="cols" [rows]="rowSizes.SMALL" [paginator]="true"
+      [totalRecords]="totalRecords" lazy="true" (onLazyLoad)="loadRRRs()" #dataTableRRRsPicker>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th pResizableColumn [pSortableColumn]="col.field" *ngFor="let col of columns">
+            <div class="d-flex">
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+              <span class="ml-1">{{ col.header | translate }}</span>
+            </div>
+          </th>
+          <th pResizableColumn style="width:8%">
+            <span>{{'COMMON.ACTIONS.ACTION' | translate}}</span></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rrrs let-row>
+        <tr>
+          <td>{{rrrs.rightTypeDescription}}</td>
+          <td>{{rrrs.spatialUnitNumber}}</td>
+          <td>
+            <ul class="list-unstyled">
+              <li *ngFor="let partyId of rrrs.idParties">{{partyId}}</li>
+            </ul>
+          </td>
+          <td>
+            <ul class="list-unstyled">
+              <li *ngFor="let partyName of rrrs.nameParties">{{partyName}}</li>
+            </ul>
+          </td>
+          <td>
+            <ul class="list-unstyled">
+              <li *ngFor="let rolParty of rrrs.rolParties">{{rolParty}}</li>
+            </ul>
+          </td>
+          <td>{{rrrs.inscriptionDate}}</td>
+          <td class="text-right">{{rrrs.inscriptionSlip}}</td>
+          <td>{{rrrs.modDate}}</td>
+          <td>
+            <p-button type="button" icon="icon icon-edit-eland" class="edit-button mr-2"
+              pTooltip="{{ 'COMMON.ACTIONS.EDIT' | translate }}" tooltipPosition="top" life="4000"
+              (click)="showRRRDialogue(row)">
+            </p-button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<!-- dialog -->
+<app-dialog appendTo="body" [(display)]="rrr" modal="modal" #rrrDialog>
+  <app-rrr [rrr]="rrr" *ngIf="rrr" [persistToDB]="persistToDb" [readOnly]="formVariables.isReadOnly || rrrsUrl"
+    [formVariables]="formVariables" [rrrsUrl]="rrrsUrl" [baUnit]="baUnit" [radiate]="radiate" (canceled)="cancelRRR()"
+    (saved)="saveRRR($event)"></app-rrr>
+</app-dialog>

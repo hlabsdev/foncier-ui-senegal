@@ -1,0 +1,69 @@
+<div class="container-fluid p-1 inner">
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{ 'PARAMETERS.RESPONSIBLE_OFFICE.TITLE' | translate}}</h1>
+    </div>
+
+    <div class="col-6 d-flex justify-content-end">
+      <p-button type="button" class="add-button" icon="icon icon-add-eland" label="{{'COMMON.ACTIONS.ADD' | translate}}"
+                (click)="showElementDialogue()"></p-button>
+    </div>
+  </div>
+
+  <!-- searchbar and filters dropdown -->
+  <div class="row no-gutters px-3 mb-3">
+    <div class="col-12">
+      <app-searchbar *ngIf="cols" [tableCols]="cols" [table]="dataTableGroupForms" [enableDropdown]=true>
+      </app-searchbar>
+    </div>
+  </div>
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <div class="col-12">
+      <p-table [columns]="cols" [value]="responsibleOffices" [rows]="rowSizes.SMALL" [paginator]="true"
+               #dataTableGroupForms>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'width': col.width}">
+              <div>
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+                <span class="ml-2">{{col.header}}</span>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-row let-responsableOffice>
+          <tr>
+            <td>{{responsableOffice.code}}</td>
+            <td>{{responsableOffice.name}}</td>
+            <!--            <td>{{responsableOffice.correspondingRole}}</td>-->
+            <td>{{responsableOffice.taxCenterId | matchSelectItem:taxCenters }}</td>
+            <td>{{responsableOffice.registryNames}}
+              <div class="pull-right">
+                <p-button class="add-button px-1" type="button" icon="icon icon-edit-eland"
+                          (click)="showElementDialogue(responsableOffice)"></p-button>
+                <!--                <p-button class="delete-button fsize10 px-1" type="button" icon="fa fa-trash" (click)="removeRegion(region)"></p-button>-->
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+<!-- dialog -->
+
+<app-params-territory-element-dialog-responsible-office [title]="modalTitle" [item]="currentResponsibleOffice"
+                                                        [col]="registries" *ngIf="currentResponsibleOffice" (saved)="saved($event)" (canceled)="canceled()"
+                                                        [errors]="modalErrors" [itemMultiple]="true" [roles]="roles" [taxCenters]="taxCenters"
+                                                        selectTxt="PARAMETERS.RESPONSIBLE_OFFICE.SELECT_REGISTRIES" subItemModel="registries"
+                                                        subItemLabel="PARAMETERS.RESPONSIBLE_OFFICE.REGISTRIES_NAME">
+</app-params-territory-element-dialog-responsible-office>
+

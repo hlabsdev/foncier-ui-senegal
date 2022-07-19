@@ -1,0 +1,135 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="container-fluid px-0">
+  <!-- title and buttons -->
+  <div class="row no-gutters mt-4 px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{'RRR.RIGHT_OWNER.TITLE' | translate}}</h1>
+    </div>
+
+    <div class="col-6 d-flex justify-content-end">
+      <p-button type="button" class="refresh-button mr-2" (click)="refresh()"
+                label=" {{'COMMON.ACTIONS.REFRESH' | translate}}" icon="fa fa-refresh"></p-button>
+    </div>
+  </div>
+
+  <!-- searchbar and filters dropdown -->
+  <div class="col-12 row no-gutters mb-3 mt-5 px-3">
+    <div class="col-8 pl-2">
+      <div class="input-group">
+        <input type="text" name="search" class="form-control" pInputText [(ngModel)]="search" size="50"
+               placeholder="{{'RRR.RIGHT_OWNER.SEARCH' | translate}}" (search)="searchParty()">
+        <div class="input-group-append">
+              <span class="input-group-text">
+                <i type="button" (click)="searchParty()"
+                   class="fa fa-search">  {{'COMMON.ACTIONS.SEARCH' | translate}}</i>
+              </span>
+        </div>
+      </div>
+    </div>
+
+    <!--DropdownSearchbar start-->
+    <div class="col-4 pl-2">
+      <div class="input-group">
+        <p-dropdown
+          [options]="parties"
+          [(ngModel)]="selectedParty"
+          (onChange)="findPartyRights()"
+          (ngModelChange)="findPartyRights()"
+          optionLabel="name"
+          [showClear]="true"
+          placeholder="{{'RRR.RIGHT_OWNER.SELECT_PARTY' | translate}}"
+        >
+        </p-dropdown>
+      </div>
+    </div>
+    <!--DropdownSearchbar end-->
+  </div>
+
+  <!--Selected party start-->
+  <div class="row no-gutters mb-3 mt-5 px-3">
+    <div class="col-12 pl-2" *ngIf="selectedParty">
+      {{'RRR.RIGHT_OWNER.SELECTED_PARTY' | translate}}: {{selectedParty.extPID}} - {{selectedParty.getName()}}
+      - {{getRole(selectedParty)}}
+      <span class="mx-3">
+        <p-button type="button" class="view-button" (click)="showPartyDetail()" label="{{'COMMON.ACTIONS.DETAILS' | translate}}" icon="fa fa-eye"></p-button>
+      </span>
+    </div>
+    <div class="col-12 pl-2 text-capitalize" style="color: red; opacity: 70%"
+         *ngIf="noPartyFound">{{'RRR.RIGHT_OWNER.NO_SELECTED_PARTY' | translate : { num: search } }}</div>
+  </div>
+  <!--Selected party end-->
+
+  <!-- table -->
+  <!--real right list start-->
+  <!--real right list end-->
+  <div class="row no-gutters px-3">
+    <div class="col-12">
+      <!-- table title start -->
+      <div class="row no-gutters mt-4 px-3">
+        <div class="col-6 d-flex">
+          <h1 class="my-auto">{{'RRR.RIGHT_OWNER.PARTY_RIGHT' | translate}}</h1>
+        </div>
+      </div>
+      <!-- table title end -->
+
+      <p-table [columns]="cols" [value]="partyRights" [paginator]="true" [rows]="rowSizes.SMALL"
+               #dataTableRightOwnerList>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" class="">
+              <div class="d-flex">
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+                <span class="ml-2">{{ col.header | translate }}</span>
+              </div>
+            </th>
+            <th class="">{{'COMMON.ACTIONS.ACTION' | translate}}</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns">
+              <span>{{ rowData[col.field] }}</span>
+            </td>
+            <td>
+              <p-button type="button" class="edit-button" (click)="showRightDetail(rowData)"
+                        label="{{'COMMON.ACTIONS.DETAILS' | translate}}" icon="icon icon-edit-eland"></p-button>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<!-- party dialog start -->
+<app-dialog appendTo="body" [(display)]="displayPartyDetail" role="modal" #partyDialog autoHeight="true">
+  <app-party
+    *ngIf="selectedParty"
+    [party]="selectedParty"
+    [readOnly]="true"
+    (canceled)="partyDialog.close(); displayPartyDetail=false">
+  </app-party>
+</app-dialog>
+<!-- party dialog end -->
+
+<!-- real right dialog start -->
+<app-dialog appendTo="body" [(display)]="displayRrrDetail" role="modal" #rrrDialog>
+  <ngx-ui-loader></ngx-ui-loader>
+  <app-rrr
+    [rrr]="selectedRrr"
+    *ngIf="selectedRrr"
+    (dataLoad)="ngxLoader.stop()"
+    [readOnly]="true"
+    [formVariables]="{showCurrentVersion: true}"
+    (canceled)="rrrDialog.close()">
+  </app-rrr>
+</app-dialog>
+<!-- real right dialog end -->
+
+

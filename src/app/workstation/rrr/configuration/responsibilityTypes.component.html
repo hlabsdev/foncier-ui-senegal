@@ -1,0 +1,62 @@
+<div class="container-fluid pr-0">
+  <!-- header -->
+  <div class="row mr-0 mb-3 pl-0 py-3 bg-white">
+    <!-- title -->
+    <div class="col-6 d-flex pl-0">
+      <h1 class="my-auto">{{'RRR.CONFIG.RESP_TITLE' | translate}}</h1>
+    </div>
+
+    <!-- buttons -->
+    <div class="col-6 pr-0">
+      <div class="pull-right">
+        <button type="button" class="pull-right" pButton icon="icon icon-add-eland"
+          label="{{'COMMON.ACTIONS.ADD' | translate}}" (click)="addResponsibilityType()"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- search input field -->
+  <div class="row mr-0 mb-3">
+    <div class="col-4 pr-0 ml-auto">
+      <div class="input-group pull-right">
+        <input (keydown.enter)="getResponsibilityTypes(search)" type="text" class="form-control" name="search"
+          id="search" placeholder="{{'COMMON.LABELS.SEARCH' | translate}}" [(ngModel)]="search">
+        <div class="input-group-append">
+          <span class="input-group-text" (click)="getResponsibilityTypes(search)">
+            <i class="fa fa-search"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- table -->
+  <div class="row mr-0 mb-3">
+    <div class="col-12 px-0">
+      <p-table [value]="responsibilityTypes" [rows]="rowSizes.XSMALL" [paginator]="true">
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="">{{'RRR.RESPONSIBILITY.VALUE' | translate}}</th>
+            <th class="">{{'COMMON.ACTIONS.ACTION' | translate}}</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-responsibility>
+          <tr>
+            <td>{{responsibility.value}}</td>
+            <td>
+              <button type="button" pButton class="ui-button-info" icon="icon icon-edit-eland"
+                label="{{'COMMON.ACTIONS.EDIT' | translate}}" (click)="editResponsibilityType(responsibilityTypes)">
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

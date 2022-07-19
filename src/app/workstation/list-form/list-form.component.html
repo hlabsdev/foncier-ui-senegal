@@ -1,0 +1,26 @@
+<!--<div class="row no-gutters" *ngIf="claimedByUser">-->
+<!--  <div class="col-3">-->
+<!--    <p-listbox styleClass="form-list" [options]="forms" [ngModel]="selectedForm"-->
+<!--               (onClick)="selectForm($event)"></p-listbox>-->
+<!--  </div>-->
+
+<!--  <div class="col-9">-->
+<!--    <app-form (canceled)="cancel($event)" (saved)="save($event)"></app-form>-->
+<!--  </div>-->
+<!--</div>-->
+<div class="row no-gutters pt-2">
+  <div class="task-form-top">
+    <p-listbox styleClass="form-list" [options]="_forms" [ngModel]="selectedForm" (onClick)="selectForm($event)">
+      <ng-template let-form let-i="index" pTemplate="item">
+        <span [ngClass]="{'list-item-error':form.requiredErr}">{{form.label + (form.required ? ' *' : ' ')}}</span>
+      </ng-template>
+    </p-listbox>
+    <div class="required">
+      {{'APP.REQUIRED' | translate}}
+    </div>
+  </div>
+
+  <div class="task-form-bottom">
+    <app-form (canceled)="cancel($event)" (saved)="save($event)"></app-form>
+  </div>
+</div>

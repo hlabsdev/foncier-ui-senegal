@@ -1,0 +1,61 @@
+<div class="container-fluid px-0" *ngIf="!this.errorMessage">
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{'HEADER.PUBLICATIONS' | translate}}</h1>
+    </div>
+
+    <div class="col-6 d-flex justify-content-end">
+      <p-button [hidden]='formVariables.isReadOnly || this.publicationUrl' type="button" class="add-button"
+        type="button" icon="icon icon-add-eland" label="{{'COMMON.ACTIONS.ADD' | translate}}"
+        (click)="showPublicationDialog()">
+      </p-button>
+    </div>
+  </div>
+
+  <!-- search bar and filters dropdown -->
+  <div class="row no-gutters mb-3 px-3">
+    <div class="col-12">
+      <app-searchbar *ngIf="cols" [tableCols]="cols" [table]="dataTablePublications" [enableDropdown]=true>
+      </app-searchbar>
+    </div>
+  </div>
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <div class="col-12">
+      <p-table [value]="publications" [rows]="rowSizes.SMALL" [columns]="cols" [paginator]="true"
+        #dataTablePublications>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" class="text-dark font-weight-bold">{{col.header}}</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-publications>
+          <tr>
+            <td *ngIf="sameEndPointRoute">{{publications.titleNumber}}</td>
+            <td *ngIf="sameEndPointRoute">{{publications.applicationNumber}}</td>
+            <td>{{publications.target.description}}</td>
+            <td>{{publications.name.description}}</td>
+            <td>{{publications.number}}</td>
+            <td>{{publications.date | date:'shortDate'}}</td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<app-dialog appendTo="body" [(display)]="publication" modal="modal" #dd>
+  <app-publication [publication]="publication" [persistToDB]="persistToDb"
+    [readOnly]="formVariables.isReadOnly || this.publicationUrl" [publicationUrl]="publicationUrl"
+    *ngIf="publication && !picker" [formVariables]="formVariables" (canceled)="cancelPublication()"
+    (saved)="savePublication($event)"></app-publication>
+
+</app-dialog>
+<core-alert *ngIf="this.errorMessage" [local]="true" [message]="errorMessage"></core-alert>

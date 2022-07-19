@@ -1,0 +1,98 @@
+<div class="container-fluid px-0">
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{ 'RRR.TITLE_LIST' | translate}}</h1>
+    </div>
+
+    <div class="col-6 d-flex justify-content-end">
+      <p-button [hidden]='formVariables.isReadOnly || this.rrrsUrl || !this._options.add' type="button"
+        class="add-button" icon="icon icon-add-eland" label="{{'COMMON.ACTIONS.ADD' | translate}}"
+        (click)="showRRRDialogue()">
+      </p-button>
+    </div>
+  </div>
+
+  <!-- searchbar and filters dropdown -->
+  <div class="row no-gutters px-3 mb-3">
+    <div class="col-12">
+      <app-searchbar *ngIf="cols" [tableCols]="cols" [table]="dataTableRRRs" [enableDropdown]=true></app-searchbar>
+    </div>
+  </div>
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <div class="col-12">
+      <p-table [columns]="cols" [value]="rrrs" [resizableColumns]="true" [rows]="rowSizes.SMALL" [paginator]="true"
+        #dataTableRRRs>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" pResizableColumn [style]="{'width':col.width}" [pSortableColumn]="col.field"
+              class="text-dark font-weight-bold">
+              <div class="d-flex">
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+                <span class="ml-1">{{col.header}}</span>
+              </div>
+            </th>
+            <th pResizableColumn style="width:9%" class="text-dark font-weight-bold">
+              {{'COMMON.ACTIONS.ACTION' | translate}}</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-row let-rrrs>
+          <tr>
+            <td>{{rrrs.rightTypeDescription}}</td>
+            <td>{{rrrs.spatialUnitNumber}}</td>
+            <td>
+              <ul class="list-unstyled">
+                <li *ngFor="let partyId of rrrs.idParties">{{partyId}}</li>
+              </ul>
+            </td>
+            <td>
+              <ul class="list-unstyled">
+                <li *ngFor="let partyName of rrrs.nameParties">{{partyName}}</li>
+              </ul>
+            </td>
+            <td>
+              <ul class="list-unstyled">
+                <li *ngFor="let rolParty of rrrs.rolParties">{{rolParty}}</li>
+              </ul>
+            </td>
+            <td>{{rrrs.radiationDate}}</td>
+            <td class="text-right">{{rrrs.radiationSlip}}</td>
+            <td>{{rrrs.inscriptionDate}}</td>
+            <td class="text-right">{{rrrs.inscriptionSlip}}</td>
+            <td>{{rrrs.modDate}}</td>
+            <td>
+              <p-button type="button" *ngIf="(formVariables.isReadOnly || this.rrrsUrl)" icon="fa fa-search"
+                class="view-button mr-2" pTooltip="{{'COMMON.ACTIONS.VIEW' | translate}}" tooltipPosition="top"
+                life="4000" (click)="showRRRDialogue(row)">
+              </p-button>
+
+              <p-button type="button" *ngIf="!(formVariables.isReadOnly || this.rrrsUrl)" icon="icon icon-edit-eland"
+                class="edit-button mr-2" pTooltip="{{'COMMON.ACTIONS.EDIT' | translate}}" tooltipPosition="top"
+                life="4000" (click)="showRRRDialogue(row)">
+              </p-button>
+
+              <p-button [hidden]="hideDeleteButton || rrrs.registrationDate" type="button" *ngIf="baUnit"
+                (click)="removeRRR(row)" class="delete-button" icon="fa fa-times"
+                pTooltip="{{'COMMON.ACTIONS.DELETE' | translate}}" tooltipPosition="top" life="4000"></p-button>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<!-- dialog -->
+<app-dialog appendTo="body" [(display)]="rrr" role="modal" #rrrDialog>
+  <ngx-ui-loader></ngx-ui-loader>
+  <app-rrr [rrr]="rrr" *ngIf="rrr" (dataLoad)="stopLoader()" [persistToDB]="persistToDb" [readOnly]="formVariables.isReadOnly || rrrsUrl"
+    [formVariables]="formVariables" [rrrsUrl]="rrrsUrl" [baUnit]="baUnit" (canceled)="cancelRRR()"
+    (saved)="saveRRR($event)"></app-rrr>
+</app-dialog>

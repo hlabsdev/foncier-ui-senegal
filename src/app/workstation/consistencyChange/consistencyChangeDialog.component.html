@@ -1,0 +1,6 @@
+<div *ngIf="!currentCC?.baUnit">
+  <app-ba-unit-picker (saved)="baUnitSave($event)"></app-ba-unit-picker>
+</div>
+<div *ngIf="currentCC?.baUnit && !currentCC?.parcel">
+  <app-spatial-unit-picker [baUnit]="currentCC.baUnit" (saved)="spatialUnitSave($event)" [multiSelect]="multiselect"></app-spatial-unit-picker>
+</div>

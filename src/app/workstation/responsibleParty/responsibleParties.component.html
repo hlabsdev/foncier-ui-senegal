@@ -1,0 +1,65 @@
+<div class="container-fluid px-0">
+  <!-- route name and buttons -->
+  <div class="row no-gutters p-3 mt-3 border-top border-ligh mb-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto font-weight-normal">{{'RESPONSIBLE_PARTY.TITLE_LIST' | translate}}</h1>
+    </div>
+
+    <div class="col-6 d-flex justify-content-end">
+      <p-button [hidden]='formVariables.isReadOnly' type="button" class="add-button" icon="icon icon-add-eland"
+        title="{{'COMMON.ACTIONS.ADD' | translate}}" (click)="showResponsiblePartyDialogue()"></p-button>
+    </div>
+  </div>
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <div class="col-12">
+      <p-table [columns]="cols" [value]="responsibleParties" [rows]="rowSizes.SMALL" [paginator]="true"
+        #dataTableResponsibleParties>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+              <div class="d-flex">
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+                <span class="ml-2">{{col.header}}</span>
+              </div>
+            </th>
+            <th>
+              <span>{{'COMMON.ACTIONS.ACTION' | translate}}</span>
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-responsibleParty>
+          <tr>
+            <td>{{responsibleParty.id}}</td>
+            <td>{{responsibleParty.individualName}}</td>
+            <td>{{responsibleParty.organizationName}}</td>
+            <td>{{'CODELIST.VALUES.'+responsibleParty.role.value | translate}}</td>
+            <td>
+              <p-button type="button" [icon]="formVariables.isReadOnly ? 'fa fa-search' : 'icon icon-edit-eland'"
+                title="{{'COMMON.ACTIONS.EDIT' | translate}}" class="edit-button mr-2"
+                (click)="showResponsiblePartyDialogue(responsibleParty)"></p-button>
+              <p-button type="button" [hidden]='formVariables.isReadOnly'
+                (click)="removeResponsibleParty(responsibleParty)" class="delete-button" icon="fa fa-times"
+                title="{{'COMMON.ACTIONS.DELETE' | translate}}"></p-button>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="5">{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<!-- dialog -->
+<p-dialog appendTo="body" [modal]="true" [responsive]="true" [(visible)]="responsibleParty" [maximizable]="true"
+  styleClass="dialog-class" #rpDialog>
+  <app-responsible-party [responsibleParty]="responsibleParty" [readOnly]="formVariables.isReadOnly"
+    (canceled)="cancelResponsibleParty()" (saved)="saveResponsibleParty($event)"></app-responsible-party>
+</p-dialog>

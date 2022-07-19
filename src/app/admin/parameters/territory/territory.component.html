@@ -1,0 +1,17 @@
+<ngx-ui-loader [loaderId]="'loader-territory'" [text]="preloaderMessage" [logoUrl]="preloaderConfig.logoUrl"
+  [logoSize]="preloaderConfig.logoSize" [overlayColor]="preloaderConfig.overlayColor"
+  [fgsType]="preloaderConfig.fgsType" [fgsSize]="preloaderConfig.fgsSize" [fgsColor]="preloaderConfig.fgsColor"
+  [pbColor]="preloaderConfig.pbColor" [pbThickness]="preloaderConfig.pbThickness"
+  [textColor]="preloaderConfig.textColor">
+</ngx-ui-loader>
+
+<div class="row px-1 py-1">
+  <p-panelMenu class="col-3" [model]="territories" [multiple]="false"></p-panelMenu>
+  <div class="col-9">
+    <app-params-territory-region *ngIf="territory === 'Region'"></app-params-territory-region>
+    <app-params-territory-division *ngIf="territory === 'Division'"></app-params-territory-division>
+    <app-params-territory-circle *ngIf="territory === 'Circle'"></app-params-territory-circle>
+    <app-params-territory-district *ngIf="territory === 'District'"></app-params-territory-district>
+    <app-params-territory-country *ngIf="territory === 'Country'"></app-params-territory-country>
+  </div>
+</div>

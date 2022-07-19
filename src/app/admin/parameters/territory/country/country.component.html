@@ -1,0 +1,62 @@
+<div class="container-fluid px-0 bordered-left inner">
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{ 'PARAMETERS.TERRITORY.COUNTRY.TITLE' | translate}}</h1>
+    </div>
+
+    <div class="col-6 d-flex justify-content-end">
+      <p-button type="button" class="add-button" icon="icon icon-add-eland" label="{{'COMMON.ACTIONS.ADD' | translate}}"
+        (click)="showCountryElementDialogue()"></p-button>
+    </div>
+  </div>
+
+  <!-- searchbar and filters dropdown -->
+  <div class="row no-gutters px-3 mb-3">
+    <div class="col-12">
+      <app-searchbar *ngIf="cols" [tableCols]="cols" [table]="dataTableGroupForms" [enableDropdown]=true>
+      </app-searchbar>
+    </div>
+  </div>
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <div class="col-12">
+      <p-table [columns]="cols" [value]="countries" [rows]="rowSizes.SMALL" [paginator]="true" #dataTableGroupForms>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'width': col.width}">
+              <div>
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+                <span class="ml-2">{{col.header}}</span>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-row let-country>
+          <tr>
+            <td>{{country?.code}}</td>
+            <td>{{country?.name}}</td>
+            <td>{{country?.description}}
+              <div class="pull-right">
+                <p-button class="add-button px-1" type="button" icon="icon icon-edit-eland"
+                  (click)="showCountryElementDialogue(country)"></p-button>
+                <!--                <p-button class="delete-button fsize10 px-1" type="button" icon="fa fa-trash" (click)="removeRegion(country)"></p-button>-->
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<!-- dialog -->
+<app-params-territory-element-dialog [title]="modalTitle" [item]="currentCountry" *ngIf="currentCountry"
+  [showSigtasField]="true" (saved)="saved($event)" (canceled)="canceled()" [errors]="modalErrors">
+</app-params-territory-element-dialog>

@@ -1,0 +1,80 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="container-fluid px-0">
+    <!-- route name and buttons -->
+    <br />
+    <div class="row no-gutters px-3">
+        <div class="col-6 d-flex">
+            <h1 class="my-auto">{{ 'CASE_GROUP_PRESENTED_CCOD.TITLE_LIST' | translate}}</h1>
+        </div>
+    </div>
+    <!-- search bar and filters dropdown -->
+    <br />
+    <div class="row no-gutters mb-3 px-3">
+        <div class="col-9">
+            <app-searchbar [tableCols]="cols" [table]="dataTableCaseGroupPresentedCcod" [enableDropdown]=true>
+            </app-searchbar>
+        </div>
+        <div class="col-3 d-flex justify-content-end">
+            <p-button [hidden]='false' type="button" class="add-button"
+                      icon="icon icon-add-eland" label="{{'CASE_GROUP_PRESENTED_CCOD.CREATION_CASE_GROUP' | translate}}" (click)="showBlockerRRRElementDialogue(true,true)">
+            </p-button>
+        </div>
+    </div>
+    <br />
+    <div class="row no-gutters px-3">
+        <div class="col-12">
+            <p-table [columns]="cols" [value]="caseGroupPresentedCcodList" [paginator]="true" [rows]="rowSizes.SMALL"
+                     [totalRecords]="totalRecords" lazy="true" (onLazyLoad)="loadCaseGroupPresentedCcodList($event)"
+                     #dataTableCaseGroupPresentedCcod>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th rowspan="2" pResizableColumn>{{'CASE_GROUP_PRESENTED_CCOD.REFERENCE_NUMBER' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'CASE_GROUP_PRESENTED_CCOD.REFERENCE' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'CASE_GROUP_PRESENTED_CCOD.DESIGNATION' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'CASE_GROUP_PRESENTED_CCOD.CASETYPE' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'CASE_GROUP_PRESENTED_CCOD.CATEGORY' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'CASE_GROUP_PRESENTED_CCOD.CSF' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'CASE_GROUP_PRESENTED_CCOD.CREATED_DATE' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'CASE_GROUP_PRESENTED_CCOD.STATUS' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'COMMON.ACTIONS.ACTION' | translate}}</th>
+                    <tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-caseGroupPresented let-columns="columns">
+                    <tr>
+                        <td class="cell-ellipsis">{{ caseGroupPresented?.caseNumber }}</td>
+                        <td class="cell-ellipsis">{{ caseGroupPresented?.reference }}</td>
+                        <td class="cell-ellipsis">{{ caseGroupPresented?.designation }}</td>
+                        <td class="cell-ellipsis">{{ caseGroupPresented?.caseType }}</td>
+                        <td class="cell-ellipsis">{{ caseGroupPresented?.category }}</td>
+                        <td class="cell-ellipsis">{{ caseGroupPresented?.csf }}</td>
+                        <td class="cell-ellipsis">{{ caseGroupPresented?.createdDate }}</td>
+                        <td class="cell-ellipsis">{{ caseGroupPresented?.status }}</td>
+                        <td>
+                            <p-button type="button" class="view-button  mr-2"
+                                      (click)="showBlockerRRRElementDialogue(true,false)"
+                                      icon="fa fa-search">
+                            </p-button>
+                            <p-button type="button" icon="icon icon-edit-eland" class="edit-button mr-2"
+                                      (click)="showBlockerRRRElementDialogue(true,false)">
+                            </p-button>
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+
+
+<app-dialog appendTo="body" [(display)]="modalVisible" modal="modal" #caseGroupDialog>
+    <app-case-group-presented-view-ccod *ngIf="modalVisible"
+                                        [editModal]="editModal"
+                                        (modalVisible)="showBlockerRRRElementDialogue($event)">
+    </app-case-group-presented-view-ccod>
+</app-dialog>

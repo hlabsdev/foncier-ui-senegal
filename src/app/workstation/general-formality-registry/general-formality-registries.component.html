@@ -1,0 +1,50 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="container-fluid px-0">
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{'GENERAL_FORMALITY_REGISTRY.TITLE_FORM' | translate}}</h1>
+    </div>
+
+  </div>
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <div class="col-12" class="rdai">
+      <p-table [columns]="cols" [value]="generalFormalityRegister" [resizableColumns]="true" [paginator]="true" [rows]="rowSizes.SMALL"
+        [totalRecords]="totalRecords" lazy="true" (onLazyLoad)="loadOppositionsRegistry($event)" [paginator]="true" #dataTableOppositionRegistry>
+        <ng-template pTemplate="header">
+          <tr>
+            <th rowspan="2" pResizableColumn style="width:7%">{{'GENERAL_FORMALITY_REGISTRY.DATE' | translate}}</th>
+            <th rowspan="2" pResizableColumn style="width:12.5%">{{'GENERAL_FORMALITY_REGISTRY.DEPOSIT_VOLUME' | translate}}</th>
+            <th rowspan="2" pResizableColumn style="width:12.5%">{{'GENERAL_FORMALITY_REGISTRY.DEPOSIT_FOLIO' | translate}}</th>
+            <th rowspan="2" pResizableColumn style="width:12.5%">{{'GENERAL_FORMALITY_REGISTRY.DEPOSIT_NUMBER' | translate}}</th>
+            <th rowspan="2" pResizableColumn style="width:9%">{{'GENERAL_FORMALITY_REGISTRY.ENTRY_NUMBER' | translate}}</th>
+            <th rowspan="2" pResizableColumn style="width:30%">{{'GENERAL_FORMALITY_REGISTRY.OBSERVATION' | translate}}</th>
+            <th rowspan="2" pResizableColumn style="width:12.5%">{{'GENERAL_FORMALITY_REGISTRY.REGISTRATION_FEES' | translate}}</th>
+            
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-generalformalityregister>
+          <tr>
+            <td>{{generalformalityregister.depositDate | date:'shortDate'}}</td>
+            <td>{{generalformalityregister.depositVolume}}</td>
+            <td>{{generalformalityregister.depositFolio}}</td>
+            <td>{{generalformalityregister.depositNumber}}</td>
+            <td>{{generalformalityregister.entryNumber}}</td>
+            <td>{{generalformalityregister.observation}}</td>
+            <td>{{generalformalityregister.registrationFees}}</td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+        </ng-template>
+
+      </p-table>
+
+    </div>
+  </div>
+</div>

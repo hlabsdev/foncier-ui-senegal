@@ -1,0 +1,38 @@
+<div class="card card-w-title">
+  <div class="row">
+    <div class="col">
+      <h1>{{ 'HEADER.PROCESSES' | translate }}</h1>
+    </div>
+    <div class="col-3">
+      <div class="pull-right">
+        <button pButton type="button" (click)="refresh()" label="{{'HEADER.DEPLOYMENTS' | translate}}"
+          icon="fa fa-refresh" class="ui-button-info mr-1"></button>
+      </div>
+    </div>
+  </div>
+  <p-table [columns]="cols" [value]="deployments">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+          <div class="d-flex">
+            <p-sortIcon [field]="col.field"></p-sortIcon>
+            <span class="ml-2">{{ col.header | translate }}</span>
+          </div>
+        </th>
+        <th>{{'COMMON.ACTIONS.ACTION' | translate}}</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns">
+          {{rowData[col.field]}}
+        </td>
+        <td></td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+    </ng-template>
+  </p-table>
+</div>

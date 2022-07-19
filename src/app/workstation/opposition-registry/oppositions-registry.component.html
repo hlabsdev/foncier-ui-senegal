@@ -1,0 +1,43 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="container-fluid px-0">
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{'OPPOSITION_REGISTRY.TITLE_FORM' | translate}}</h1>
+    </div>
+  </div>
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <div class="col-12" class="divisionRegistry">
+      <p-table [columns]="cols" [value]="oppositionsregistry" [resizableColumns]="true" [paginator]="true" [rows]="rowSizes.SMALL"
+        [totalRecords]="totalRecords" lazy="true" (onLazyLoad)="loadOppositionsRegistry($event)" [paginator]="true" #dataTableOppositionRegistry>
+        <ng-template pTemplate="header">
+          <tr>
+            <th rowspan="2" pResizableColumn style="width:7%">{{'OPPOSITION_REGISTRY.DATE' | translate}}</th>
+            <th rowspan="2" pResizableColumn style="width:9%">{{'OPPOSITION_REGISTRY.ENTRY_NUMBER' | translate}}</th>
+            <th rowspan="2" pResizableColumn style="width:30%">{{'OPPOSITION_REGISTRY.OBSERVATION' | translate}}</th>
+            <th rowspan="2" pResizableColumn style="width:12.5%">{{'OPPOSITION_REGISTRY.RELEASENOTICE' | translate}}</th>
+            
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-oppositionregistry>
+          <tr>
+            <td>{{oppositionregistry.depositDate | date:'shortDate'}}</td>
+            <td>{{oppositionregistry.entryNumber}}</td>
+            <td>{{oppositionregistry.observation}}</td>
+            <td>{{ oppositionregistry.releaseNotice }}</td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+        </ng-template>
+
+      </p-table>
+
+    </div>
+  </div>
+</div>

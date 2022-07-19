@@ -1,0 +1,18 @@
+<div class="row no-gutters px-3 mb-3">
+  <label for="text" class="col-4 col-form-label">{{'UPLOAD_DOCUMENT.TEXT' | translate}}</label>
+
+  <div class="col-8">
+    <input type="text" class="form-control" name="text" id="text" [(ngModel)]="administrativeSource.text"
+      #name="ngModel">
+  </div>
+</div>
+
+<div class="row no-gutters px-3">
+  <label for="type" class="col-4 col-form-label">{{'UPLOAD_DOCUMENT.TYPE' | translate}}
+    <span class="text-info">*</span></label>
+  <div class="col-8">
+    <p-dropdown appendTo="body" [options]="cTypes" name="typeDropdown" [(ngModel)]="administrativeSource.type"
+      styleClass="form-control w-100" required>
+    </p-dropdown>
+  </div>
+</div>

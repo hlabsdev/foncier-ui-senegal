@@ -1,0 +1,109 @@
+<!-- add edit -->
+<p-dialog appendTo="body" *ngIf="!viewSource && selectedDocument && selectedDocument.source"
+  [(visible)]="selectedDocument" [modal]="true" [responsive]="true" [maximizable]="true" styleClass="dialog-class">
+  <form #form="ngForm" (ngSubmit)="saveDocument(selectedDocument, form)" method="post" enctype="multipart/form-data"
+    [ngClass]="{'was-validated': form.submitted}" novalidate>
+    <core-alert [message]="errorMessage" [local]="true"></core-alert>
+
+    <div class="container-fluid px-0">
+      <div class="row no-gutters px-3 mb-3">
+        <div class="col-6 p-3">
+          <h1>{{'UPLOAD_DOCUMENT.HEADER_NAME' | translate}}</h1>
+        </div>
+      </div>
+
+      <div class="row no-gutters px-3 mb-3">
+        <label for="mainType" class="col-4 col-form-label">{{'UPLOAD_DOCUMENT.MAIN_TYPE' | translate}}
+          <span class="text-info">*</span></label>
+        <div class="col-8">
+          <p-dropdown [options]="mainTypes" appendTo="body" name="mainTypeDropdown"
+            [(ngModel)]="selectedDocument.source.mainType" styleClass="form-control w-100"
+            [disabled]="selectedDocument.source.mainType && selectedDocument.source.id " required></p-dropdown>
+        </div>
+      </div>
+
+      <div class="row no-gutters px-3 mb-3">
+        <label for="timeSpec" class="col-4 col-form-label">{{'UPLOAD_DOCUMENT.SUBMISSION_DATE' | translate}}
+          <span class="text-info">*</span></label>
+        <div class="col-8">
+          <p-calendar #timeSpec="ngModel" [dateFormat]="locale.dateFormat" [locale]="locale"
+            [(ngModel)]="selectedDocument.source.submissionDate" [monthNavigator]="true" [yearNavigator]="true"
+            yearRange="1900:2999" name="submissionDate" inputStyleClass="form-control" styleClass="w-100" required>
+          </p-calendar>
+        </div>
+      </div>
+
+      <div class="row no-gutters px-3 mb-3">
+        <label for="type" class="col-4 col-form-label">{{'UPLOAD_DOCUMENT.SOURCE_TYPE' | translate}}
+          <span class="text-info">*</span></label>
+        <div class="col-8">
+          <p-dropdown [options]="sourceTypes" appendTo="body" name="sourceTypeDropdown"
+            [(ngModel)]="selectedDocument.source.sourceType" styleClass="form-control w-100"
+            [disabled]="selectedDocument.source.sourceType && selectedDocument.source.id " (onChange)="getTypes($event)"
+            required></p-dropdown>
+        </div>
+      </div>
+
+      <div class="row no-gutters px-3 mb-3">
+        <label for="timeSpec" class="col-4 col-form-label">{{'UPLOAD_DOCUMENT.ACCEPTANCE_DATE' | translate}}</label>
+        <div class="col-8">
+          <p-calendar #timeSpec="ngModel" [dateFormat]="locale.dateFormat" [locale]="locale"
+            [(ngModel)]="selectedDocument.source.acceptanceDate" [monthNavigator]="true" [yearNavigator]="true"
+            yearRange="1900:2999" name="acceptanceDate" inputStyleClass="form-control" styleClass="w-100"></p-calendar>
+        </div>
+      </div>
+
+      <div class="row no-gutters px-3 mb-3">
+        <label for="timeSpec" class="col-4 col-form-label">{{'UPLOAD_DOCUMENT.RECORDATION_DATE' | translate}}</label>
+        <div class="col-8">
+          <p-calendar #timeSpec="ngModel" [dateFormat]="locale.dateFormat" [locale]="locale"
+            [(ngModel)]="selectedDocument.source.recordationDate" [monthNavigator]="true" [yearNavigator]="true"
+            yearRange="1900:2999" name="recordationDate" inputStyleClass="form-control" styleClass="w-100"></p-calendar>
+        </div>
+      </div>
+
+      <app-administrative-source *ngIf="showSourceType(type.ADMINISTRATIVE_SOURCE)"
+        [(administrativeSource)]=selectedDocument.source [cTypes]=types></app-administrative-source>
+
+      <div class="row no-gutters px-3 mb-3">
+        <label for="type" class="col-4 col-form-label">{{'COMMON.ACTIONS.UPLOAD' | translate}}
+          <span class="text-info">*</span></label>
+        <div class="col-8">
+          <p-fileUpload required name="file" [ngClass]="(noFileUploaded)?'missing-file':'app-source'"
+            maxFileSize="60000000" auto="true" customUpload="true" (onRemove)="removeDocument()"
+            (uploadHandler)="uploadDocument($event)" invalidFileSizeMessageSummary="{0}"
+            invalidFileSizeMessageDetail="{{'MESSAGES.MAX_FILE_ERROR' | translate}}"
+            chooseLabel="{{'COMMON.ACTIONS.UPLOAD' | translate}}">
+          </p-fileUpload>
+        </div>
+      </div>
+      
+      <app-support-source *ngIf="showSourceType(type.SUPPORT_SOURCE)" [(supportSource)]=selectedDocument.source>
+      </app-support-source>
+      <app-cheque *ngIf="showSourceType(type.CHEQUE)" [(cheque)]=selectedDocument.source></app-cheque>
+
+      <app-responsible-parties [(responsibleParties)]="selectedDocument.source.sources">
+      </app-responsible-parties>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="pull-right mt-1">
+            <p-button type="button" (click)="cancel()" label=" {{'COMMON.ACTIONS.CANCEL' | translate}}" icon="fa fa-undo"
+            class="cancel-button mr-2"></p-button>
+            <p-button type="submit" label="{{'COMMON.ACTIONS.SAVE' | translate}}" icon="fa fa-floppy-o"
+              class="save-button">
+            </p-button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</p-dialog>
+
+<!-- view -->
+<div class="col" *ngIf="viewSource && displayObj.file ">
+  <app-file-viewer [displayObj]="displayObj" (closeViewer)="cancel()">
+    <span>{{displayObj.fileName}}</span>
+  </app-file-viewer>
+</div>

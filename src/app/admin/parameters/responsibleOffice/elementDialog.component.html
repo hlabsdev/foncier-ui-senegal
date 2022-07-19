@@ -1,0 +1,62 @@
+<p-dialog appendTo="body" [header]="title" [(visible)]="item" [modal]="true"
+  [responsive]="true" [maximizable]="true" [blockScroll]="false" (onHide)="cancel()">
+  <div>
+    <div class="container-fluid px-0">
+
+      <core-alert *ngIf="errors" [local]="true" [autoClear]="true" [message]="errors"></core-alert>
+
+      <div class="row no-gutters px-3 pt-3">
+        <label class="col-4 col-form-label">{{'PARAMETERS.TERRITORY.COMMON.CODE' | translate}}
+          <span class="text-info"></span></label>
+        <div class="col-8">
+          <input type="text" class="form-control" [(ngModel)]="item.code" required #name="ngModel">
+        </div>
+      </div>
+      <div class="row no-gutters px-3 pt-3">
+        <label class="col-4 col-form-label">{{'PARAMETERS.TERRITORY.COMMON.NAME' | translate}}
+          <span class="text-info"></span></label>
+        <div class="col-8">
+          <input type="text" class="form-control" [(ngModel)]="item.name" required #name="ngModel">
+        </div>
+      </div>
+
+<!--      <div class="row no-gutters px-3 pt-3">
+        <label class="col-4 col-form-label">{{'PARAMETERS.RESPONSIBLE_OFFICE.CORRESPONDING_ROLE' | translate}}
+          <span class="text-info"></span></label>
+        <div class="col-8">
+          <p-dropdown [options]="roles" [(ngModel)]="item.correspondingRole" [filter]="true" autoWidth="false" [style]="{'width':'100%'}" *ngIf="roles"></p-dropdown>
+        </div>
+      </div>-->
+
+      <div class="row no-gutters px-3 pt-3">
+        <label class="col-4 col-form-label">{{'PARAMETERS.RESPONSIBLE_OFFICE.TAX_CENTER_ID' | translate}}
+          <span class="text-info"></span></label>
+        <div class="col-8">
+          <p-dropdown [options]="taxCenters" [(ngModel)]="item.taxCenterId" [filter]="true" autoWidth="false" [style]="{'width':'100%'}" *ngIf="taxCenters"></p-dropdown>
+          <input type="text" class="form-control" [(ngModel)]="item.taxCenterId" required #name="ngModel" *ngIf="!taxCenters">
+        </div>
+      </div>
+
+      <div class="row no-gutters px-3 pt-3" *ngIf="selectTxt && subItemLabel && subItemModel && selectableCol && col">
+        <label class="col-4 col-form-label">{{subItemLabel | translate}}
+          <span class="text-info"></span></label>
+        <div class="col-8">
+          <p-multiSelect [options]="selectableCol" [(ngModel)]="item[subItemModel]" [filter]="true" autoWidth="false"
+            [style]="{'width':'100%'}" *ngIf="itemMultiple"></p-multiSelect>
+        </div>
+      </div>
+
+      <div class="row no-gutters px-3 pt-3">
+        <div class="col-12">
+          <div class="pull-right mb-3">
+            <p-button type="button" icon="fa fa-undo" label="{{'COMMON.ACTIONS.CANCEL' | translate}}"
+              class="cancel-button mr-3" (click)="cancel()"></p-button>
+            <p-button icon="fa fa-floppy-o" label="{{'COMMON.ACTIONS.SAVE' | translate}}" class="save-button"
+              (click)="save()"></p-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</p-dialog>

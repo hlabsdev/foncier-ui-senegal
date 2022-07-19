@@ -1,0 +1,41 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit($event)" novalidate class="container-fluid px-0"
+  [ngClass]="formSubmitted ? 'was-validated' : 'no-validate'">
+  <!-- header -->
+  <div class="row no-gutters p-3 mb-2">
+    <!-- title -->
+    <div class="col-6">
+      <h1 class="my-auto" *ngIf="title">{{title | translate}} :</h1>
+    </div>
+
+  </div>
+
+  <!-- error message -->
+  <div class="row no-gutters">
+    <div class="col-12">
+      <core-alert *ngIf="errorMessage" [local]="true" [autoClear]="true" [message]="errorMessage"></core-alert>
+    </div>
+  </div>
+
+  <!-- form core -->
+  <ng-container *ngFor="let field of fields;" dynamicField [field]="field" [group]="form" [readOnly]="readOnly">
+  </ng-container>
+
+  <div class="row no-gutters">
+    <div class="col-12">
+      <ng-content select="app-group">
+      </ng-content>
+    </div>
+  </div>
+  
+  <div class="col-12" [hidden]="hideActions">
+    <div class="pull-right mb-2">
+      <p-button type="button" label=" {{'COMMON.ACTIONS.CANCEL' | translate}}" icon="fa fa-undo"
+      class="cancel-button mr-2" (click)="cancel()"></p-button>
+      <p-button type="submit" label="{{'COMMON.ACTIONS.SAVE' | translate}}" icon="fa fa-floppy-o" class="save-button mr-2"
+        [hidden]="readOnly || hideSaveButton"></p-button>
+      <p-button (click)="getCurrentValues($event)" label="{{'COMMON.ACTIONS.CALCUL' | translate}}" icon="fa fa-floppy-o" class="save-button"
+        [hidden]="readOnly || showCalculButton!=true"></p-button>
+    </div>
+  </div>
+
+</form>

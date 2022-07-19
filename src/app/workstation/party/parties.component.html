@@ -1,0 +1,78 @@
+<div class="container-fluid px-0">
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{'PARTY.TITLE_LIST' | translate}}</h1>
+    </div>
+
+    <div class="col-6 d-flex justify-content-end">
+      <p-button [hidden]='formVariables.isReadOnly  || this.partiesUrl' type="button" class="add-button"
+        icon="icon icon-add-eland" label="{{'COMMON.ACTIONS.ADD' | translate}}" (click)="showPartyDialogue()">
+      </p-button>
+    </div>
+  </div>
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <div class="col-12">
+      <p-table [columns]="cols" [value]="parties" [resizableColumns]="true" [rows]="rowSizes.SMALL" [paginator]="true"
+        [totalRecords]="totalRecords" lazy="true" (onLazyLoad)="loadParties($event)" #dataTableParties>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" pResizableColumn [style]="{'width':col.width}" [pSortableColumn]="col.field"
+              class="text-dark font-weight-bold">
+              <div class="d-flex">
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+                <span class="ml-1">{{col.header}}</span>
+              </div>
+            </th>
+            <th *ngIf="(baUnit && !picker) || (picker && !formVariables.isReadOnly)" pResizableColumn style="width:10%">
+              <span>{{'COMMON.ACTIONS.ACTION' | translate}}</span>
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-row let-party>
+          <tr>
+            <td>{{party.extPID}}</td>
+            <td>{{party.name}}</td>
+            <td>{{party.role}}</td>
+            <td>{{party.radiationDate | date:'shortDate'}}</td>
+            <td>{{party.inscriptionDate | date:'shortDate'}}</td>
+            <td>{{party.modDate | date:'shortDate'}}</td>
+            <td *ngIf="(baUnit && !picker) || (picker && !formVariables.isReadOnly)">
+              <p-button *ngIf="(baUnit && !picker) && (hideRemovePartyButton || party.registrationDate)" type="button"
+                icon="fa fa-search" class="view-button mr-2" pTooltip="{{'COMMON.ACTIONS.VIEW' | translate}}"
+                tooltipPosition="top" life="4000" (click)="showPartyDialogue(party)"></p-button>
+              <p-button *ngIf="(baUnit && !picker) && !(hideRemovePartyButton || party.registrationDate)" type="button"
+                icon="icon icon-edit-eland" class="edit-button mr-2" pTooltip="{{'COMMON.ACTIONS.EDIT' | translate}}"
+                tooltipPosition="top" life="4000" (click)="showPartyDialogue(party)"></p-button>
+              <p-button *ngIf="baUnit && !picker" type="button"
+                [hidden]="hideRemovePartyButton || party.registrationDate" (click)="removeparty(row)"
+                class="delete-button" icon="fa fa-times" pTooltip="{{'COMMON.ACTIONS.DELETE' | translate}}"
+                tooltipPosition="top" life="4000"></p-button>
+              <p-button *ngIf="picker" type="button" [hidden]="hideRemovePartyButton || party.registrationDate"
+                (click)="partyPickerDeleteParty(party)" class="delete-button" icon="fa fa-times"
+                pTooltip="{{'COMMON.ACTIONS.DELETE' | translate}}" tooltipPosition="top" life="4000"></p-button>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<!-- dialog -->
+<app-dialog appendTo="body" [(display)]="party" modal="modal" #dd autoHeight="true">
+  <app-party *ngIf="party && !picker" [party]="party" [persistToDB]="persistToDb" [formVariables]="formVariables"
+    [readOnly]="hideRemovePartyButton || party.registrationDate" [partiesUrl]="partiesUrl" (canceled)="cancelParty()"
+    (saved)="saveParty($event)">
+  </app-party>
+  <app-party-picker *ngIf="picker" [formVariables]="formVariables" [filterByRRRType]="filterByRRRType"
+    (saved)="partyPickerAddParties($event)">
+  </app-party-picker>
+</app-dialog>

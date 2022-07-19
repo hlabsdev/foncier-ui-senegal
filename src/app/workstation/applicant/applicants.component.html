@@ -1,0 +1,58 @@
+<div class="container-fluid px-0">
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{(this.applicantsUrl ? 'HEADER.APPLICANTS' : 'APPLICANTS.TITLE_LIST') | translate}}</h1>
+    </div>
+
+    <div class="col-6 d-flex justify-content-end">
+      <p-button [hidden]='this.applicantsUrl' type="button" class="add-button" (click)="addApplicant()"
+        icon="icon icon-add-eland" label="{{'COMMON.ACTIONS.ADD' | translate}}"></p-button>
+    </div>
+  </div>
+
+  <!-- searchbar and filters dropdown -->
+  <div class="row no-gutters px-3 mb-3">
+    <div class="col-12">
+      <app-searchbar *ngIf="cols" [tableCols]="cols" [table]="dataTableApplicants" [enableDropdown]=true>
+      </app-searchbar>
+    </div>
+  </div>
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <div class="col-12">
+      <p-table [columns]="cols" [value]="applicants" [rows]="rowSizes.SMALL" [paginator]="true" #dataTableApplicants>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" class="">
+              <div class="d-flex">
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+                <span class="ml-2">{{col.header}}</span>
+              </div>
+            </th>
+            <th class="">{{'COMMON.ACTIONS.ACTION' | translate}}</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-applicant>
+          <tr>
+            <td>{{applicant.firstName}}</td>
+            <td>{{applicant.lastName}}</td>
+            <td>
+              <p-button type="button" class="edit-button"
+                [icon]="(this.applicantsUrl) ? 'fa fa-search' : 'icon icon-edit-eland'"
+                class="(this.applicantsUrl) ? 'edit-button mr-2' :'view-button mr-2'"
+                label="{{((this.applicantsUrl) ? 'COMMON.ACTIONS.VIEW': 'COMMON.ACTIONS.EDIT') | translate}}"
+                (click)="editApplicant(applicant)"></p-button>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

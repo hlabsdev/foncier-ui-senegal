@@ -1,0 +1,18 @@
+<div *ngIf="currentSection">
+  <div class="row no-gutters mb-1">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{currentSection?.name}}</h1>
+    </div>
+
+    <div class="col-6 d-flex justify-content-end">
+      <p-button type="button" icon="fa fa-edit"
+                class="edit-button" (click)="editSection()"></p-button>
+    </div>
+  </div>
+  <div class="container-fluid py-2">
+    <app-translation-item></app-translation-item>
+  </div>
+</div>
+
+<app-translation-section-modal (onCancel)="cancelModal()" (onHide)="hideModal()" (onSave)="saveModal()" [visible]="modalVisible"
+                               *ngIf="modalVisible" [section]="currentAdd"></app-translation-section-modal>

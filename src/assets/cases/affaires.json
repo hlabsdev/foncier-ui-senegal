@@ -1,0 +1,202 @@
+{
+  "caseGroupPresentedCcodList": [
+    {
+      "id": "1001",
+      "caseNumber": "1",
+      "reference": "Fatou NDAO",
+      "designation": "Demande de bail - lot SN - 150 m² - DN - Grand Yoff",
+      "caseType": "AFFAIRES IMMOBILIERES",
+      "category": "Régularisations",
+      "csf": "Dakar",
+      "createdDate": "20 Avril 2021",
+      "status": "EN-COURS",
+      "cases": [
+        {
+          "id": "1234",
+          "depositDate":"20 Avril 2021",
+          "application": {
+            "applicationNumber": "",
+            "referenceNumber": "",
+            "applicationPurpose": "",
+            "applicant": {
+              "displayName": "",
+              "type" : ""
+            }
+          }
+
+        }
+      ]
+    },
+    {
+      "id": "1002",
+      "caseNumber": "2",
+      "reference": "Sucession de feu Lysse Louis LOPES",
+      "designation": "Demande de bail - lot SN - 188 m² - Code Civil - Rue Wagane Diouf",
+      "caseType": "AFFAIRES IMMOBILIERES",
+      "category": "Régularisations",
+      "csf": "Dakar",
+      "createdDate": "20 Avril 2021",
+      "status": "EN-COURS",
+      "cases": [
+        {
+          "_id": "1234",
+          "_depositDate":"20 Avril 2021",
+          "_application": null
+
+        }
+      ]
+    },
+    {
+      "id": "1003",
+      "caseNumber": "3",
+      "reference": "Khalifa Ababacar GAYE et 05 autres",
+      "designation": "Demande de baux à Pikine Guédiawaye",
+      "caseType": "AFFAIRES IMMOBILIERES",
+      "category": "Régularisations",
+      "csf": "Pikine Guediawaye",
+      "createdDate": "20 Avril 2021",
+      "status": "EN-COURS",
+      "cases": [
+        {
+          "_id": "1234",
+          "_depositDate":"20 Avril 2021",
+          "_application": null
+
+        }
+      ]
+    },
+    {
+      "id": "1004",
+      "caseNumber": "4",
+      "reference": "Ablaye LO et 05 autres",
+      "designation": "Demande de baux à Pikine Guédiawaye",
+      "caseType": "AFFAIRES IMMOBILIERES",
+      "category": "Régularisations",
+      "csf": "Pikine Guediawaye",
+      "createdDate": "20 Avril 2021",
+      "status": "EN-COURS",
+      "cases": [
+        {
+          "_id": "1234",
+          "_depositDate":"20 Avril 2021",
+          "_application": null
+
+        }
+      ]
+    },
+    {
+      "id": "1005",
+      "caseNumber": "5",
+      "reference": "Cooperative d'habitat de l'ENSUT",
+      "designation": "Demande de bail - lot SN - 02ha 61a 19ca - DN - Niacoulrab",
+      "caseType": "AFFAIRES IMMOBILIERES",
+      "category": "Régularisations",
+      "csf": "Rufisque",
+      "createdDate": "21 Avril 2021",
+      "status": "EN-COURS",
+      "cases": [
+        {
+          "_id": "1234",
+          "_depositDate":"20 Avril 2021",
+          "_application": null
+
+        }
+      ]
+    },
+    {
+      "id": "1006",
+      "caseNumber": "6",
+      "reference": "Cooperative d'habitat Sococim Industries",
+      "designation": "Demande de bail - lot SN - 01ha 93a 64ca - DN - Bambilor",
+      "caseType": "AFFAIRES IMMOBILIERES",
+      "category": "Régularisations",
+      "csf": "Rufisque",
+      "createdDate": "21 Avril 2021",
+      "status": "EN-COURS",
+      "cases": [
+        {
+          "_id": "1234",
+          "_depositDate":"20 Avril 2021",
+          "_application": null
+
+        }
+      ]
+    },
+    {
+      "id": "1007",
+      "caseNumber": "7",
+      "reference": "La Société Agro Industrie Sénégalaise",
+      "designation": "Demande de bail - lot SN - 199ha 84a 01ca - DN -Diama",
+      "caseType": "AFFAIRES IMMOBILIERES",
+      "category": "Régularisations",
+      "csf": "Saint Louis",
+      "createdDate": "21 Avril 2021",
+      "status": "EN-COURS",
+      "cases": [
+        {
+          "_id": "1234",
+          "_depositDate":"20 Avril 2021",
+          "_application": null
+
+        }
+      ]
+    },
+    {
+      "id": "1008",
+      "caseNumber": "8",
+      "reference": "Amary FAYE",
+      "designation": "Demande de bail - lot 4673 - 300 m² - TF 32/BS - Boudiouck",
+      "caseType": "AFFAIRES IMMOBILIERES",
+      "category": "Régularisations",
+      "csf": "Saint Louis",
+      "createdDate": "21 Avril 2021",
+      "status": "EN-COURS",
+      "cases": [
+        {
+          "_id": "1234",
+          "_depositDate":"20 Avril 2021",
+          "_application": null
+
+        }
+      ]
+    },
+    {
+      "id": "1009",
+      "caseNumber": "9",
+      "reference": "Ibrahima NDIAYE",
+      "designation": "Demande de bail - lot SN - 01ha 48a 13ca - DN -Nguekhokh",
+      "caseType": "AFFAIRES IMMOBILIERES",
+      "category": "Régularisations",
+      "csf": "Mbour",
+      "createdDate": "21 Avril 2021",
+      "status": "EN-COURS",
+      "cases": [
+        {
+          "_id": "1234",
+          "_depositDate":"20 Avril 2021",
+          "_application": null
+
+        }
+      ]
+    },
+    {
+      "id": "1010",
+      "caseNumber": "10",
+      "reference": "Alioune Badara GUEYE et Brigitte Mairy SENE",
+      "designation": "Demande de bail - lot 83 - 506 m² - TF 1302/MB - Ngaparou",
+      "caseType": "AFFAIRES IMMOBILIERES",
+      "category": "Régularisations",
+      "csf": "Mbour",
+      "createdDate": "21 Avril 2021",
+      "status": "EN-COURS",
+      "cases": [
+        {
+          "_id": "1234",
+          "_depositDate":"20 Avril 2021",
+          "_application": null
+
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="container-fluid px-0">
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{ 'HEADER.TRANSACTIONS' | translate }}</h1>
+    </div>
+
+    <div class="col-6 d-flex justify-content-end">
+      <p-button type="button" class="add-button" icon="icon icon-add-eland" (click)="add()"
+        label="{{'COMMON.ACTIONS.ADD' | translate}}" *ngIf="hasSystemAdministratorAccess"></p-button>
+    </div>
+  </div>
+
+  <!-- searchbar and filters dropdown -->
+  <div class="row no-gutters mb-3 px-3">
+    <div class="col-12">
+      <app-searchbar *ngIf="cols" [tableCols]="cols" [table]="dataTableTransactions" [enableDropdown]=true>
+      </app-searchbar>
+    </div>
+  </div>
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <div class="col-12">
+      <p-table [columns]="cols" [value]="transactions" [paginator]="true" [rows]="rowSizes.SMALL"
+        #dataTableTransactions>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+              <div class="d-flex">
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+                <span class="ml-2">{{col.header}}</span>
+              </div>
+            </th>
+            <th>{{'COMMON.ACTIONS.ACTION' | translate}}</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns">
+
+              <ng-container *ngIf="hasSystemAdministratorAccess; else default">
+
+                <ng-container *ngIf="rowData[col.field] && col.field === 'role'; else default">
+                  {{'TRANSACTION.' + rowData[col.field] | translate}}
+                </ng-container>
+                <ng-template #default>
+                  <ng-container>
+                    <span>{{ rowData[col.field] }}</span>
+                  </ng-container>
+                </ng-template>
+
+              </ng-container>
+
+              <ng-template #default>
+                <span>{{ rowData[col.field] }}</span>
+              </ng-template>
+
+            </td>
+            <td>
+              <p-button type="button" *ngIf="hasSystemAdministratorAccess || hasManuallyStartTransactionAccess"
+                class="start-button mr-2" icon="icon icon-start-eland" label="{{'COMMON.ACTIONS.START' | translate}}"
+                (click)="start(rowData)">
+              </p-button>
+              <p-button type="button" *ngIf="hasSystemAdministratorAccess" class="edit-button"
+                icon="icon icon-edit-eland" label="{{'COMMON.ACTIONS.EDIT' | translate}}" (click)="edit(rowData)">
+              </p-button>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

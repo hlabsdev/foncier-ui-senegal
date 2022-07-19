@@ -1,0 +1,65 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="container-fluid px-0">
+    <br/>
+    <br/>
+    <!-- route name and buttons -->
+    <div class="row no-gutters px-3">
+        <div class="col-6 d-flex align-items-center">
+            <h1 class="my-auto">{{'LAND_SITUATION_TABLE.TITLE' | translate}}</h1>
+        </div>
+    </div>
+    <br/>
+    <!-- table -->
+    <div class="row no-gutters px-3">
+        <div class="col-12" class="rdai">
+            <p-table [columns]="cols" [value]="landSituationTables" [resizableColumns]="true" [paginator]="true"
+                     [rows]="rowSizes.SMALL"
+                     [totalRecords]="totalRecords" lazy="true" (onLazyLoad)="loadLandSituationTable($event)"
+                     [paginator]="true" #dataTablelandSituation>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th rowspan="2" pResizableColumn style="width:8%; text-align: center">{{'LAND_SITUATION_TABLE.ESTABLISHED_DATE' | translate}}</th>
+                        <th rowspan="2" pResizableColumn style="width:10%; text-align: center">{{'LAND_SITUATION_TABLE.DESIGNATION' | translate}}</th>
+                        <th rowspan="2" pResizableColumn style="width:8%; text-align: center">{{'LAND_SITUATION_TABLE.LOCATION' | translate}}</th>
+                        <th rowspan="2" pResizableColumn style="width:8%; text-align: center">{{'LAND_SITUATION_TABLE.ENTRY_NUMBER' | translate}}</th>
+                        <th rowspan="2" pResizableColumn style="width:10%; text-align: center">{{'LAND_SITUATION_TABLE.LEGAL_NATURE' | translate}}</th>
+                        <th rowspan="2" pResizableColumn style="width:10%; text-align: center">{{'LAND_SITUATION_TABLE.LOT_NUMBER' | translate}}</th>
+                        <th rowspan="2" pResizableColumn style="width:10%; text-align: center">{{'LAND_SITUATION_TABLE.NICAD' | translate}}</th>
+                        <th rowspan="2" pResizableColumn style="width:10%; text-align: center">{{'LAND_SITUATION_TABLE.OWNER' | translate}}</th>
+                        <th rowspan="2" pResizableColumn style="width:10%; text-align: center">{{'LAND_SITUATION_TABLE.PROJECT_IMPACT' | translate}}</th>
+                        <th colspan="2" pResizableColumn style="width:20%; text-align: center">{{'LAND_SITUATION_TABLE.AREA' | translate}}</th>
+                        <th rowspan="2" pResizableColumn style="width:10%; text-align: center">{{'LAND_SITUATION_TABLE.OBSERVATIONS' | translate}}</th>
+                    </tr>
+                    <tr>
+                        <th rowspan="1" pResizableColumn>{{'LAND_SITUATION_TABLE.TOTAL_LAND' | translate}}</th>
+                        <th rowspan="1" pResizableColumn>{{'LAND_SITUATION_TABLE.IMPACTED_PROJECT' | translate}}</th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-lst>
+                    <tr>
+                        <td>{{lst.establishedDate}}</td>
+                        <td>{{lst.designation}}</td>
+                        <td>{{lst.locationLand}}</td>
+                        <td>{{lst.entryNumber}}</td>
+                        <td>{{lst.baUnitTitleNumber}}</td>
+                        <td>{{lst.lotNumber}}</td>
+                        <td>{{lst.nicad}}</td>
+                        <td>{{lst.owner.fullname}}</td>
+                        <td>{{ lst.projectImpact }}</td>
+                        <td>{{ lst.totalLandArea }}</td>
+                        <td>{{ lst.impactLandArea }}</td>
+                        <td>{{lst.observations}}</td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+                </ng-template>
+
+            </p-table>
+
+        </div>
+    </div>
+</div>

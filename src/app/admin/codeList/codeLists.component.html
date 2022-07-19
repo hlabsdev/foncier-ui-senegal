@@ -1,0 +1,64 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="container-fluid px-0">
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{ 'CODELIST.TITLE_LIST' | translate}}</h1>
+    </div>
+
+    <div class="col-6 d-flex justify-content-end">
+      <p-button type="button" class="refresh-button mr-2" (click)="refresh($event)"
+        label=" {{'COMMON.ACTIONS.REFRESH' | translate}}" icon="fa fa-refresh"></p-button>
+      <p-button type="button" class="add-button" type="submit" (click)="addCodeList()"
+        label=" {{'COMMON.ACTIONS.ADD' | translate}}" icon="icon icon-add-eland"></p-button>
+    </div>
+  </div>
+
+  <!-- searchbar and filters dropdown -->
+  <div class="row no-gutters mb-3 px-3">
+    <div class="col-12">
+      <app-searchbar *ngIf="cols" [tableCols]="cols" [table]="dataTableCodeLists" [enableDropdown]=true></app-searchbar>
+    </div>
+  </div>
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <div class="col-12">
+      <p-table [columns]="cols" [value]="codeLists" [paginator]="true" [rows]="rowSizes.SMALL" #dataTableCodeLists>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" class="">
+              <div class="d-flex">
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+                <span class="ml-2">{{ col.header | translate }}</span>
+              </div>
+            </th>
+            <th class="">{{'COMMON.ACTIONS.ACTION' | translate}}</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns">
+              <span>{{ rowData[col.field] }}</span>
+            </td>
+            <td>
+              <p-button type="button" class="edit-button" (click)="editCodeList(rowData)"
+                label="{{'COMMON.ACTIONS.EDIT' | translate}}" icon="icon icon-edit-eland"></p-button>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<!-- dialog -->
+<app-codelist appendTo="body" *ngIf="receivedCodeList?.codeListID || receivedCodeList?.type"
+  [codeList]="receivedCodeList" [sourceRRRconfig]="false" (onClose)="closeDialog()" (refresh)="refresh($event)">
+</app-codelist>

@@ -1,0 +1,78 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="container-fluid mt-3 px-0">
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{(registeredUrl ? 'HEADER.BA_UNITS_REGISTERED' : 'BA_UNITS.TITLE_LIST') | translate}}</h1>
+    </div>
+  </div>
+
+  <!-- searchbar and filters dropdown -->
+
+  <div class="row no-gutters px-3 mb-3">
+    <div class="col-12">
+      <app-searchbar *ngIf="cols" [tableCols]="cols" [table]="dataTableGroupForms" [enableDropdown]=true>
+      </app-searchbar>
+    </div>
+  </div>
+  <!-- <div class="row no-gutters mb-3 px-3">
+    <div class="col-3 pr-2">
+      <p-dropdown styleClass="form-control w-100" [options]="searchFields" name="searchCols" [(ngModel)]="searchField">
+      </p-dropdown>
+    </div>
+    <div class="col-9 pl-2">
+      <div class="ui-inputgroup">
+        <input type="text" name="search" class="form-control search-bar-input" pInputText [(ngModel)]="searchText"
+          size="50" placeholder="{{'COMMON.LABELS.SEARCH' | translate}}" (keyup.enter)="searchBaUnits()">
+        <button pButton type="button" icon="fa fa-search" class="ui-button-warn view-button search-bar-button"
+          (click)="searchBaUnits()"></button>
+      </div>
+    </div>
+  </div> -->
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <div class="col-12">
+      <p-table [columns]="cols" [value]="baUnits" [paginator]="true" [rows]="rowSizes.SMALL"
+        [totalRecords]="totalRecords"  #dataTableGroupForms>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" class="" class="cell-ellipsis" [ngStyle]="{'width': col.width}">
+              <div class="d-flex">
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+                <span class="ml-2">{{col.header}}</span>
+              </div>
+            </th>
+            <th>{{'COMMON.ACTIONS.ACTION' | translate}}</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-baUnit let-columns="columns">
+          <tr>
+            <td class="cell-ellipsis">{{ baUnit.titleName }}</td>
+            <td class="cell-ellipsis">{{ baUnit.registryRecord.volume }}</td>
+            <td class="cell-ellipsis">{{ baUnit.spatialUnits.parcelNumber }}</td>
+            <td class="cell-ellipsis">{{('CODELIST.VALUES.' + baUnit.type.value | translate)}}</td>
+            <!-- Hide field just for the demo
+            <td class="cell-ellipsis">{{ baUnit.parties.length }}</td>
+            <td class="cell-ellipsis">{{ baUnit.rrrs.length }}</td>
+            <td class="cell-ellipsis">{{ baUnit.spatialUnits.length }}</td>
+            -->
+            <td class="cell-ellipsis">{{ baUnit.owner }}</td>
+            <td>
+              <p-button type="button" title="{{'COMMON.ACTIONS.VIEW' | translate}}" *ngIf="showOnlyRegistered"
+                class="view-button mr-2" icon="fa fa-search" (click)="editBAUnit(baUnit)"></p-button>
+              <p-button type="button" title="{{'COMMON.ACTIONS.EDIT' | translate}}" *ngIf="!showOnlyRegistered"
+                class="edit-button" icon="icon icon-edit-eland" (click)="editBAUnit(baUnit)"></p-button>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

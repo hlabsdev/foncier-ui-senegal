@@ -1,0 +1,169 @@
+<nav class="navbar navbar-expand-lg topbar" id="navbarMain">
+  <a class="navbar-brand topbar-logo" routerLink="/">
+    <img title="{{'HEADER.APP_TITLE' | translate}}" class="logo"
+      [attr.src]="'./assets/layout/images/logo-sgf.png'">
+  </a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon text-white">☰</span>
+  </button>
+
+  <div *ngIf="user" class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav w-100 border-0">
+      <!-- accueil -->
+      <li class="nav-item d-flex" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact: true}">
+        <a class="nav-link " routerLink="home" (click)="app.topbarMenuActive=false"><span>{{'HEADER.HOME' |
+            translate}}</span></a>
+      </li>
+
+      <!-- administration (dropdown) -->
+      <li *ngIf="hasAdminMenuAccess" class="nav-item dropdown d-flex" [routerLinkActive]="'active'"
+        [routerLinkActiveOptions]="{exact: true}">
+        <a class="nav-link dropdown-toggle " href="#" id="adminDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false" (click)="app.topbarMenuActive=false;">
+          <span class="mr-2">{{'HEADER.ADMIN' | translate}}</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="adminDropdown">
+          <a *ngIf="hasSystemAdministratorAccess" class="dropdown-item" routerLink="processes" data-testid="/processes">
+            <span>{{'HEADER.PROCESSES' | translate}}</span>
+          </a>
+          <a *ngIf="hasTransactionAccess" class="dropdown-item" routerLink="transactions">
+            <span>{{'HEADER.TRANSACTIONS' | translate}}</span>
+          </a>
+          <a *ngIf="hasDashboardAccess" class="dropdown-item" (click)="openDashboard();">
+            <span>{{'HEADER.DASHBOARD' | translate}}</span>
+          </a>
+          <a *ngIf="hasSystemAdministratorAccess" class="dropdown-item" routerLink="code-lists">
+            <span>{{'HEADER.CODE_LIST' | translate}}</span>
+          </a>
+          <a *ngIf="hasSystemAdministratorAccess" class="dropdown-item" routerLink="rrr-validations">
+            <span>{{'HEADER.RRR_VALIDATION' | translate}}</span>
+          </a>
+          <a *ngIf="hasSystemAdministratorAccess" class="dropdown-item" routerLink="parameters">
+            <span>{{'HEADER.PARAMETERS' | translate}}</span>
+          </a>
+        </div>
+      </li>
+
+      <!-- poste de travail (dropdown) -->
+      <li *ngIf="hasWorkstationMenuAccess" class="nav-item dropdown mr-auto d-flex" [routerLinkActive]="'active'"
+        [routerLinkActiveOptions]="{exact: true}">
+        <a class="nav-link dropdown-toggle my-auto" href="#" id="workstation" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false" (click)="app.topbarMenuActive=false;">
+          <span class="mr-2">{{'HEADER.WORKSTATION' | translate}}</span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="workstation">
+          <a *ngIf="hasWorkstationAccess" class="dropdown-item" routerLink="applications">
+            <span>{{'HEADER.APPLICATIONS' | translate}}</span>
+          </a>
+          <a *ngIf="hasWorkstationAccess" class="dropdown-item text-wrap" routerLink="ba-units/registered">
+            <span>{{'HEADER.BA_UNITS_REGISTERED' | translate}}</span>
+          </a>
+          <a *ngIf="hasWorkstationAccess" class="dropdown-item" routerLink="rdais">
+            <span>{{'HEADER.RDAI' | translate}}</span>
+          </a>
+          <a *ngIf="hasWorkstationAccess" class="dropdown-item" routerLink="oppositionsregistry">
+            <span>{{'HEADER.OPPOSITION_REGISTRY' | translate}}</span>
+          </a>
+          <a *ngIf="hasWorkstationAccess" class="dropdown-item text-wrap" routerLink="right-owners">
+            <span>{{'HEADER.RIGHT_OWNER' | translate}}</span>
+          </a>
+          <a *ngIf="hasWorkstationAccess" class="dropdown-item" routerLink="generalFormalityRegistries">
+            <span>{{'HEADER.GENERAL_FORMALITY_REGISTRY' | translate}}</span>
+          </a>
+          <a *ngIf="hasWorkstationAccess" class="dropdown-item" routerLink="preregistrationFormalities">
+            <span>{{'HEADER.REGISTRE_FORMALITY' | translate}}</span>
+          </a>
+          <a *ngIf="hasWorkstationAccess" class="dropdown-item" routerLink="publications">
+            <span>{{'HEADER.PUBLICATIONS' | translate}}</span>
+          </a>
+          <a *ngIf="hasWorkstationAccess" class="dropdown-item" routerLink="divisionRegistries">
+            <span>{{'HEADER.DIVISION_REGISTRY' | translate}}</span>
+          </a>
+          <a *ngIf="hasArcGisAccess" class="dropdown-item" href="/assets/arcgis/ParcelSenegalV4.pitemx" id="arcgis">
+            <span>{{'HEADER.ARC_GIS' | translate}}</span>
+          </a>
+          <a *ngIf="hasWorkstationAccess" class="dropdown-item" routerLink="case-presented-ccod">
+            <span>{{'HEADER.CASE_PRESENTED_CCOD' | translate}}</span>
+          </a>
+          <a *ngIf="hasWorkstationAccess" class="dropdown-item" routerLink="delegation">
+            <span>{{'HEADER.DELEGATION_DD' | translate}}</span>
+          </a>
+          <a *ngIf="hasSigtasAccess" class="dropdown-item dropdown-toggle" href="#" id="sigtas" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="app.topbarMenuActive=false;">
+            <span class="mr-3">{{'HEADER.SIGTAS.TITLE' | translate}}</span>
+            <div class="dropdown-menu" aria-labelledby="sigtas">
+              <a *ngFor="let link of sigtasLinks" target="new" class="dropdown-item"
+                (click)="openSigtasPath(link.path)">
+                <span>{{link.label | translate}}</span>
+              </a>
+            </div>
+          </a>
+        </div>
+      </li>
+
+      <li class="divider"></li>
+
+      <!-- tâches -->
+      <li class="nav-item user-actions d-flex" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact: true}">
+        <a class="nav-link " routerLink="tasks-list" (click)="app.topbarMenuActive=false;"><span>{{'HEADER.TASKS' |
+            translate}}</span></a>
+      </li>
+
+      <!-- utilisateur (dropdown) -->
+      <li class="nav-item dropdown d-flex user">
+        <a *ngIf="user" href="#" class="nav-link dropdown-toggle d-flex" id="navbarDropdown" role="button"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-testid="logoutAction"
+          (click)="app.onTopbarMenuButtonClick($event)">
+          <span class="text-capitalize  mr-2" data-testid="username">{{user.firstName}} {{user.lastName}}</span>
+
+          <div class="user-avatar d-flex flex-column justify-content-center rounded-circle ">
+            <i class="icon icon-user-eland"></i>
+            <span *ngIf="userInitialsUppercase" class="mx-auto">
+              {{user.firstName.charAt(0)}}{{user.lastName.charAt(0)}}
+            </span>
+          </div>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" (click)="handleSettingsRouting('user_profile');">
+            <span>{{'HEADER.USER_PROFILE' | translate }}</span>
+          </a>
+          <a class="dropdown-item" (click)="handleSettingsRouting('session_preferences');">
+            <span>{{'HEADER.SESSION_PREFERENCES' | translate }}</span>
+          </a>
+          <a *ngIf="hasSystemAdministratorAccess" class="dropdown-item"
+            (click)="handleSettingsRouting('application_preferences');">
+            <span>{{'HEADER.APPLICATION_PREFERENCES' | translate }}</span>
+          </a>
+          <a class="dropdown-item" (click)="openUserGuide()">
+            <span>{{'HEADER.USER_GUIDE' | translate }}</span>
+          </a>
+          <a class="dropdown-item" #logout (click)="doLogout();" data-testid="logout">
+            <span>{{'COMMON.ACTIONS.LOGOUT' | translate }}</span>
+            <i class="icon icon-sign-out-eland"></i>
+          </a>
+        </div>
+      </li>
+
+      <li class="divider"></li>
+
+      <!-- cobrand (dropdown) -->
+      <li *ngIf="coBrandInMenu" class="nav-item dropdown d-flex cobrand">
+        <a href="#" class="nav-link dropdown-toggle d-flex" href="#" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <span class="text-uppercase  mr-2">{{applicationPreferences.orgName}}</span>
+          <div class="cobrand-image d-flex flex-column justify-content-center rounded-circle"
+            [ngStyle]="{'background-image':'url(' + applicationPreferences.orgVisualIdentity + ')'}">
+          </div>
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="{{applicationPreferences.orgWebsite}}" target="_blank">
+            <span>{{'HEADER.EXTERNAL_LINKS' | translate}}</span>
+          </a>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</nav>

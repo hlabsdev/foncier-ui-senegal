@@ -1,0 +1,62 @@
+<div class="container-fluid px-0">
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h2 class="my-auto">{{ 'RRR_VALIDATION.BLOCKER_RRR.TITLE' | translate}}</h2>
+    </div>
+
+    <div class="col-6 d-flex justify-content-end">
+      <p-button *ngIf="!readOnly" type="button" class="add-button" icon="icon icon-add-eland"
+        label="{{'COMMON.ACTIONS.ADD' | translate}}" (click)="showBlockerRRRElementDialogue()"></p-button>
+    </div>
+  </div>
+
+  <!-- searchbar and filters dropdown -->
+
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <div class="col-12">
+      <p-table [columns]="cols" [value]="rrrValidation.blockerRRRs" [rows]="rowSizes.SMALL" [paginator]="true"
+        #dataTableBlockerRRRs>
+        <ng-template pTemplate="header" let-column>
+          <tr>
+            <th *ngFor="let col of cols" [ngStyle]="{'width': col.width}">
+              <div>
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+                <span class="ml-2">{{col.header}}</span>
+              </div>
+            </th>
+            <th *ngIf="!readOnly" class="text-dark font-weight-bold">{{'COMMON.ACTIONS.ACTION' | translate}}</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-row let-blockerRRR>
+          <tr>
+            <!--            <td>{{blockerRRR.RRRValidationId}}</td>-->
+            <td>{{blockerRRR.blockerRRRValidationId}}</td>
+            <td>{{blockerRRR.requireConfirmation}}</td>
+            <td *ngIf="!readOnly">
+              <div class="pull-right">
+                <p-button class="add-button px-1" type="button" icon="icon icon-edit-eland"
+                  (click)="showBlockerRRRElementDialogue(blockerRRR)"></p-button>
+                <p-button class="delete-button fsize10 px-1" type="button" icon="fa fa-trash"
+                  (click)="removeBlockerRRR(blockerRRR)"></p-button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<!-- dialog -->
+<app-dialog appendTo="body" [(display)]="blockerRRR" modal="modal" #blockerRRRElementDialog>
+  <app-blocker-rrr-element *ngIf="blockerRRR" [blockerRRR]="blockerRRR" (saved)="saveBlockerRRR($event)"
+    (canceled)="canceled()"></app-blocker-rrr-element>
+</app-dialog>

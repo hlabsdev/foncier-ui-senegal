@@ -1,0 +1,93 @@
+{
+  "cases": [
+    {
+      "id": "1234",
+      "depositDate":"20 Avril 2021",
+      "application": {
+        "applicationNumber": "2021-8/BR_DAK",
+        "referenceNumber": "REF-12345",
+        "applicationPurpose": "Cession de vehicules du Ministére de l'économie et du PLan (FONGIP)",
+        "applicant": {
+          "displayName": "Boubacar Cissokho",
+          "type" : "Personne morale"
+        }
+      }
+    },
+    {
+      "id": "1235",
+      "depositDate":"22 Avril 2021",
+      "application": {
+        "applicationNumber": "2021-8/BR_DAK",
+        "referenceNumber": "REF-12346",
+        "applicationPurpose": "Cession de vehicules AD 23318",
+        "applicant": {
+          "displayName": "Sidy Diallo",
+          "type" : "Personne physique"
+        }
+      }
+    },
+    {
+      "id": "1236",
+      "depositDate":"23 Avril 2021",
+      "application": {
+        "applicationNumber": "2021-8/BR_DAK",
+        "referenceNumber": "REF-12345",
+        "applicationPurpose": "Demande de Morcellement",
+        "applicant": {
+          "displayName": "MABOYE NIANG",
+          "type" : "Personne morale"
+        }
+      }
+    },
+    {
+      "id": "1237",
+      "depositDate":"20 Avril 2021",
+      "application": {
+        "applicationNumber": "2021-8/BR_DAK",
+        "referenceNumber": "REF-12345",
+        "applicationPurpose": "Demande de bail à YOFF-Lot6 -1200 m2 - TF 10,961/GR - Hann Bel Air",
+        "applicant": {
+          "displayName": "MABOYE NIANG",
+          "type" : "Personne morale"
+        }
+      }
+    },
+    {
+      "id": "1238",
+      "depositDate":"20 Avril 2021",
+      "application": {
+        "applicationNumber": "2021-8/BR_MBOUR",
+        "referenceNumber": "REF-12345",
+        "applicationPurpose": "Demande de bail",
+        "applicant": {
+          "displayName": "Haut COnseil des Notables de YOFF",
+          "type" : "Personne morale"
+        }
+      }
+    },    {
+      "id": "1239",
+      "depositDate":"20 Avril 2021",
+      "application": {
+        "applicationNumber": "2021-8/BR_NGOR",
+        "referenceNumber": "REF-12345",
+        "applicationPurpose": "Demande de bail d'avenant rectificatif-lot37-150 metres carrees - TF415/GR",
+        "applicant": {
+          "displayName": "Société EMG UNiversal Auto",
+          "type" : "Personne morale"
+        }
+      }
+    },    {
+      "id": "1240",
+      "depositDate":"20 Avril 2021",
+      "application": {
+        "applicationNumber": "2021-8/BR_ALMADIES",
+        "referenceNumber": "REF-12345",
+        "applicationPurpose": "Demande d'extension de bail-lot SN 30 metres carrées- TF 442/GR",
+        "applicant": {
+          "displayName": "MABOYE NIANG",
+          "type" : "Personne morale"
+        }
+      }
+    }
+  ]
+}

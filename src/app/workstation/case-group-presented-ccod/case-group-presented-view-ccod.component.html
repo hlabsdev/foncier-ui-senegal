@@ -1,0 +1,79 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="container-fluid px-0">
+    <!-- route name and buttons -->
+    <br />
+    <div class="row no-gutters px-3">
+        <div class="col-6 d-flex">
+            <h1 class="my-auto">{{ 'CASE_PRESENTED_CCOD.TITLE_LIST' | translate}}</h1>
+        </div>
+    </div>
+    <!-- search bar and filters dropdown -->
+    <br />
+    <div class="row no-gutters mb-3 px-3">
+        <div class="col-6">
+            <app-searchbar *ngIf="cols" [tableCols]="cols" [table]="dataTableCasePresentedCcod" [enableDropdown]=true>
+            </app-searchbar>
+        </div>
+        <div class="col-6">
+            <div class="pull-right" *ngIf="editModal">
+                <p-button [hidden]='false' type="button" class="cancel-button mr-2"
+                          icon="fa fa-undo" label="{{'COMMON.ACTIONS.CANCEL' | translate}}" (click)="cancel()">
+                </p-button>
+                <p-button [hidden]='false' type="submit" class="save-button"
+                          icon="fa fa-floppy-o" label="{{'COMMON.ACTIONS.SAVE' | translate}}" (click)="save()">
+                </p-button>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row no-gutters px-3">
+        <div class="col-12">
+            <p-table [columns]="cols" [value]="casePresentedCcodViewList" [paginator]="true" [rows]="rowSizes.SMALL"
+                [totalRecords]="totalRecords" lazy="true" (onLazyLoad)="loadCasePresentedCcodList($event)"
+                     [selection]="selectedCase"
+                     (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)"
+                #dataTableCasePresentedCcod>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngIf="editModal" style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th rowspan="2" pResizableColumn>{{'CASE_PRESENTED_CCOD.DEPOSIT_DATE' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'CASE_PRESENTED_CCOD.NUMBER' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'CASE_PRESENTED_CCOD.REFERENCE_NUMBER' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'CASE_PRESENTED_CCOD.REQUEST_NAME' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'CASE_PRESENTED_CCOD.PURPOSE' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'CASE_PRESENTED_CCOD.REQUESTER_TYPE' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'COMMON.ACTIONS.ACTION' | translate}}</th>
+                    <tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-casePresented let-columns="columns">
+                    <tr>
+                        <td *ngIf="editModal">
+                            <p-tableCheckbox [value]="casePresented"></p-tableCheckbox>
+                        </td>
+                        <td class="cell-ellipsis">{{ casePresented?.depositDate }}</td>
+                        <td class="cell-ellipsis">{{ casePresented?.application.applicationNumber }}</td>
+                        <td class="cell-ellipsis">{{ casePresented?.application.referenceNumber }}</td>
+                        <td class="cell-ellipsis">{{ casePresented?.application.applicant.displayName }}</td>
+                        <td class="cell-ellipsis">{{ casePresented?.application.applicationPurpose }}</td>
+                        <td class="cell-ellipsis">{{ casePresented?.application.applicant.type }}</td>
+                        <td>
+                            <p-button type="button" class="view-button  mr-2" icon="fa fa-search">
+                            </p-button>
+                            <p-button type="button" icon="icon icon-edit-eland" class="edit-button mr-2">
+                            </p-button>
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+

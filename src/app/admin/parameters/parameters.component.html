@@ -1,0 +1,45 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="container-fluid px-0">
+  <!-- route name and buttons -->
+  <div class="row no-gutters mb-0">
+    <div class="col-12 d-flex">
+      <h1 class="my-auto">{{'HEADER.PARAMETERS' | translate}}</h1>
+    </div>
+  </div>
+
+  <div class="row no-gutters mb-0 px-0 pt-0 pb-0">
+    <div class="col-12">
+      <p-tabView [activeIndex]="selectedParamIndex" (onChange)="handleChange($event)">
+        <p-tabPanel [header]="'PARAMETERS.TERRITORY.TITLE' | translate">
+          <app-params-territory></app-params-territory>
+        </p-tabPanel>
+        <p-tabPanel [header]="'PARAMETERS.REGISTRY.TITLE' | translate">
+          <app-params-registry></app-params-registry>
+        </p-tabPanel>
+        <p-tabPanel [header]="'PARAMETERS.RESPONSIBLE_OFFICE.TITLE' | translate">
+          <app-params-responsible-office></app-params-responsible-office>
+        </p-tabPanel>
+          <p-tabPanel header="Forms">
+            <app-params-forms></app-params-forms>
+          </p-tabPanel>
+          <p-tabPanel header="Form Groups">
+            <app-params-forms-group></app-params-forms-group>
+          </p-tabPanel>
+
+        <p-tabPanel [header]="'CACHING.TITLE' | translate">
+          <app-params-caching></app-params-caching>
+        </p-tabPanel>
+        <p-tabPanel [header]="'PARAMETERS.LOCALE.TITLE' | translate">
+          <app-params-locale></app-params-locale>
+        </p-tabPanel>
+        <p-tabPanel [header]="'PARAMETERS.LANGUAGE.TITLE' | translate">
+          <app-params-language></app-params-language>
+        </p-tabPanel>
+        <p-tabPanel [header]="'PARAMETERS.TRANSLATION.TITLE' | translate">
+          <app-params-translation></app-params-translation>
+        </p-tabPanel>
+      </p-tabView>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,235 @@
+<div class="container-fluid p-1 inner">
+
+    <!-- route name and buttons -->
+    <div class="row no-gutters px-3">
+        <div class="col-6 d-flex">
+            <h1 class="my-auto">Ordres du jour</h1>
+        </div>
+        <div class="col-6 d-flex justify-content-end">
+            <p-button (click)="addAgendas()" class="add-button" icon="icon icon-add-eland"
+                      label="Créer ordre du jour" type="button"></p-button>
+        </div>
+    </div>
+
+    <!-- table -->
+    <div class="row no-gutters px-3">
+        <div class="col-6 d-flex" class="divisionRegistry">
+            <p-table [value]="agendas" styleClass="p-datatable-striped">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>N° Ordre du jour</th>
+                        <th>Libellé</th>
+                        <th>Date création</th>
+                        <th>Action</th>
+                    </tr>
+                </ng-template>
+                <ng-template let-agenda pTemplate="body">
+                    <tr>
+                        <td>{{agenda.agendasNumber}}</td>
+                        <td>{{agenda.label}}</td>
+                        <td>{{agenda.createdDate}}</td>
+                        <td>
+                            <p-button class="edit-button mr-2" icon="icon icon-edit-eland"
+                                      life="4000" pTooltip="{{'COMMON.ACTIONS.EDIT' | translate}}"
+                                      tooltipPosition="top" type="button"></p-button>
+                            <p-button (click)="viewAgendas()" class="view-button mr-2" icon="fa fa-search" life="4000"
+                                      pTooltip="{{'COMMON.ACTIONS.VIEW' | translate}}" tooltipPosition="top"
+                                      type="button">
+                            </p-button>
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+
+    <p-dialog [(visible)]="addAgendasDialog" [maximizable]="true" [modal]="true"
+              appendTo="body" styleClass="dialog-w600">
+        <div class="row no-gutters px-3 mb-3">
+            <div class="col-8 p-3">
+                <h1>Ordre du jour</h1>
+            </div>
+            <div class="col-4 p-3">
+                <p-button (click)="cancel()" class="cancel-button mr-2" icon="fa fa-undo"
+                          label=" {{'COMMON.ACTIONS.CANCEL' | translate}}"
+                          type="button"></p-button>
+                <p-button class="save-button" icon="fa fa-floppy-o" label="{{'COMMON.ACTIONS.SAVE' | translate}}"
+                          (click)="saveAgendas()" type="submit">
+                </p-button>
+            </div>
+        </div>
+        <div class="card">
+            <p-table #dt [(selection)]="selectedBusinesses"
+                     [globalFilterFields]="['caseNumber','reference','designation','caseType','category','csf']"
+                     [paginator]="true"
+                     [rowHover]="true"
+                     [rows]="10" [showCurrentPageReport]="true" [value]="businesses"
+                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                     dataKey="id">
+                <ng-template pTemplate="caption">
+                    <!-- searchbar and filters dropdown -->
+                    <div class="row no-gutters mb-3 px-3">
+                      <!--  <div class="col-2 p-3">
+                            <h5 class="p-m-0">Liste des affaires</h5>
+                        </div>-->
+                        <div class="ui-g-offset-3 col-6 p-3">
+                            <app-searchbar (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                           [enableDropdown]=false></app-searchbar>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="caseNumber">Numéro affaire
+                            <p-sortIcon field="caseNumber"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="reference">Réference
+                            <p-sortIcon field="reference"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="designation">Désignation
+                            <p-sortIcon field="designation"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="caseType">Type affaire
+                            <p-sortIcon field="caseType"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="category">Catégorie
+                            <p-sortIcon field="category"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="csf">Lieu
+                            <p-sortIcon field="csf"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="createdDate">Date création
+                            <p-sortIcon field="createdDate"></p-sortIcon>
+                        </th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template let-business pTemplate="body">
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="business"></p-tableCheckbox>
+                        </td>
+                        <td>{{business.caseNumber}}</td>
+                        <td>{{business.reference}}</td>
+                        <td>{{business.designation}}</td>
+                        <td>{{business.caseType}}</td>
+                        <td>{{business.category}}</td>
+                        <td>{{business.csf}}</td>
+                        <td>{{business.createdDate}}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="p-d-flex p-ai-center p-jc-between">
+                        In total there are {{businesses ? businesses.length : 0 }} business.
+                    </div>
+                </ng-template>
+            </p-table>
+        </div>
+    </p-dialog>
+
+    <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+    <p-dialog [(visible)]="agendasDialog" [maximizable]="true" [modal]="true"
+              appendTo="body" styleClass="dialog-w600">
+       <div class="card">
+            <div class="col-6 d-flex my-auto pl-0">
+                <h1 class="mb-0">
+                    <span>Ordre du jour N°1</span>
+                </h1>
+            </div>
+            <div class="row border">
+                <label class="ui-g-offset-3 col-md-6 col-form-label"><strong>AFFAIRES MOBILIERES</strong> </label>
+            </div>
+            <div class="row">
+                <div class="col-md-6 border-left border-right">Babacar SAMAKE C/03 AUTRES</div>
+                <div class="col-md-6 border-left border-right"> Cession Véhicule AD 17 272</div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 border-left border-right">Oumar CISSE</div>
+                <div class="col-md-6 border-left border-right"> Cession Véhicule AD 11 108</div>
+            </div>
+            <div class="row border">
+                <label class="ui-g-offset-3 col-md-6 col-form-label"><strong> AFFAIRES IMMOBILIERES</strong></label>
+            </div>
+            <div class="row border">
+                <label class="col-md-6 border-left border-right col-form-label"><strong>I-Régularisations</strong>
+                </label>
+                <div class="col-md-6 border-left border-right"></div>
+            </div>
+            <div class="row">
+                <label class="col-md-6 border-left border-right col-form-label"><strong><u>Dakar</u></strong> </label>
+                <div class="col-md-6 border-left border-right"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 border-left border-right"> Fatou NDAO</div>
+                <div class="col-md-6  border-left border-right"> Demande de bail - lot SN -150 m² - DN - Grand Yoff
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6 border-left border-right"> Succession de feu Lysse Louis Lopes</div>
+                <div class="col-md-6 border-left border-right"> Demande de bail - lot SN -188 m² - Code Civil - Rue
+                    Wagane
+                </div>
+            </div>
+            <div class="row">
+                <label class="col-md-6  border-left border-right col-form-label"><strong><u>Pikine
+                    Guediawaye</u></strong> </label>
+                <div class="col-md-6 border-left border-right"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 border-left border-right"> Khalifa Ababacar GAYE et 05 autres</div>
+                <div class="col-md-6  border-left border-right"> Demande de baux à Pikine Guédiawaye</div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6 border-left border-right"> Ablaye LO et 05 autres</div>
+                <div class="col-md-6 border-left border-right"> Demande de baux à Pikine Guédiawaye</div>
+            </div>
+            <div class="row border">
+                <label class="col-md-6 border-left border-right col-form-label"> <strong>II-Cession</strong></label>
+                <div class="col-md-6 border-left border-right"></div>
+            </div>
+            <div class="row">
+                <label class="col-md-6 border-left border-right col-form-label"><strong><u>Ngor Almadies</u></strong>
+                </label>
+                <div class="col-md-6 border-left border-right"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 border-left border-right"> Marc ALDASORO</div>
+                <div class="col-md-6 border-left border-right"> Cession définitive - lot de 220 m² - TF 4942/GR</div>
+            </div>
+            <div class="row border">
+                <label class="col-md-6 border-left border-right col-form-label"> <strong>III-Transfert</strong></label>
+                <div class="col-md-6 border-left border-right"></div>
+            </div>
+            <div class="row">
+                <label class="col-md-6 border-left border-right col-form-label"><strong><u>Ngor Almadies</u></strong>
+                </label>
+            </div>
+            <div class="row">
+                <div class="col-md-6 border-left border-right"> Heritiers de feue Dieynaba HANNE</div>
+                <div class="col-md-6 border-left border-right"> Transfert de bail - lot 81/M - 200 m² - TF 30673/DG
+                </div>
+            </div>
+            <div class="row border">
+                <label class="col-md-6 border-left border-right col-form-label"> <strong>IV-Divers</strong></label>
+                <div class="col-md-6 border-left border-right"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 border-left border-right">l'Association A.M.O.R.C</div>
+                <div class="col-md-6 border-left border-right"> Demande d'extension à titre de regularisation - 2924
+                    m²- Fenetre Mermoz
+                </div>
+            </div>
+        </div>
+    </p-dialog>
+
+</div>

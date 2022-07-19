@@ -1,0 +1,484 @@
+{
+  "data": [
+    {
+      "id": "1000",
+      "agendasNumber": "1",
+      "label": "CCOD N°1",
+      "createdDate": "20 Avril 2021",
+      "business": [
+        {
+          "id": "1001",
+          "caseNumber": "1",
+          "reference": "Fatou NDAO",
+          "designation": "Demande de bail - lot SN - 150 m² - DN - Grand Yoff",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Dakar",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1002",
+          "caseNumber": "2",
+          "reference": "Sucession de feu Lysse Louis LOPES",
+          "designation": "Demande de bail - lot SN - 188 m² - Code Civil - Rue Wagane Diouf",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Dakar",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1003",
+          "caseNumber": "3",
+          "reference": "Khalifa Ababacar GAYE et 05 autres",
+          "designation": "Demande de baux à Pikine Guédiawaye",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Pikine Guediawaye",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1004",
+          "caseNumber": "4",
+          "reference": "Ablaye LO et 05 autres",
+          "designation": "Demande de baux à Pikine Guédiawaye",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Pikine Guediawaye",
+          "createdDate": "20 Avril 2021"
+        }
+      ]
+    },
+    {
+      "id": "1001",
+      "agendasNumber": "2",
+      "label": "CCOD N°2",
+      "createdDate": "20 Avril 2021",
+      "business": [
+        {
+          "id": "1001",
+          "caseNumber": "1",
+          "reference": "Fatou NDAO",
+          "designation": "Demande de bail - lot SN - 150 m² - DN - Grand Yoff",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Dakar",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1002",
+          "caseNumber": "2",
+          "reference": "Sucession de feu Lysse Louis LOPES",
+          "designation": "Demande de bail - lot SN - 188 m² - Code Civil - Rue Wagane Diouf",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Dakar",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1003",
+          "caseNumber": "3",
+          "reference": "Khalifa Ababacar GAYE et 05 autres",
+          "designation": "Demande de baux à Pikine Guédiawaye",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Pikine Guediawaye",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1004",
+          "caseNumber": "4",
+          "reference": "Ablaye LO et 05 autres",
+          "designation": "Demande de baux à Pikine Guédiawaye",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Pikine Guediawaye",
+          "createdDate": "20 Avril 2021"
+        }
+      ]
+    },
+    {
+      "id": "1002",
+      "agendasNumber": "3",
+      "label": "CCOD N°3",
+      "createdDate": "20 Avril 2021",
+      "business": [
+        {
+          "id": "1001",
+          "caseNumber": "1",
+          "reference": "Fatou NDAO",
+          "designation": "Demande de bail - lot SN - 150 m² - DN - Grand Yoff",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Dakar",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1002",
+          "caseNumber": "2",
+          "reference": "Sucession de feu Lysse Louis LOPES",
+          "designation": "Demande de bail - lot SN - 188 m² - Code Civil - Rue Wagane Diouf",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Dakar",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1003",
+          "caseNumber": "3",
+          "reference": "Khalifa Ababacar GAYE et 05 autres",
+          "designation": "Demande de baux à Pikine Guédiawaye",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Pikine Guediawaye",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1004",
+          "caseNumber": "4",
+          "reference": "Ablaye LO et 05 autres",
+          "designation": "Demande de baux à Pikine Guédiawaye",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Pikine Guediawaye",
+          "createdDate": "20 Avril 2021"
+        }
+      ]
+    },
+    {
+      "id": "1003",
+      "agendasNumber": "4",
+      "label": "CCOD N°4",
+      "createdDate": "20 Avril 2021",
+      "business": [
+        {
+          "id": "1001",
+          "caseNumber": "1",
+          "reference": "Fatou NDAO",
+          "designation": "Demande de bail - lot SN - 150 m² - DN - Grand Yoff",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Dakar",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1002",
+          "caseNumber": "2",
+          "reference": "Sucession de feu Lysse Louis LOPES",
+          "designation": "Demande de bail - lot SN - 188 m² - Code Civil - Rue Wagane Diouf",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Dakar",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1003",
+          "caseNumber": "3",
+          "reference": "Khalifa Ababacar GAYE et 05 autres",
+          "designation": "Demande de baux à Pikine Guédiawaye",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Pikine Guediawaye",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1004",
+          "caseNumber": "4",
+          "reference": "Ablaye LO et 05 autres",
+          "designation": "Demande de baux à Pikine Guédiawaye",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Pikine Guediawaye",
+          "createdDate": "20 Avril 2021"
+        }
+      ]
+    },
+    {
+      "id": "1004",
+      "agendasNumber": "5",
+      "label": "CCOD N°5",
+      "createdDate": "20 Avril 2021",
+      "business": [
+        {
+          "id": "1001",
+          "caseNumber": "1",
+          "reference": "Fatou NDAO",
+          "designation": "Demande de bail - lot SN - 150 m² - DN - Grand Yoff",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Dakar",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1002",
+          "caseNumber": "2",
+          "reference": "Sucession de feu Lysse Louis LOPES",
+          "designation": "Demande de bail - lot SN - 188 m² - Code Civil - Rue Wagane Diouf",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Dakar",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1003",
+          "caseNumber": "3",
+          "reference": "Khalifa Ababacar GAYE et 05 autres",
+          "designation": "Demande de baux à Pikine Guédiawaye",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Pikine Guediawaye",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1004",
+          "caseNumber": "4",
+          "reference": "Ablaye LO et 05 autres",
+          "designation": "Demande de baux à Pikine Guédiawaye",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Pikine Guediawaye",
+          "createdDate": "20 Avril 2021"
+        }
+      ]
+    },
+    {
+      "id": "1005",
+      "agendasNumber": "6",
+      "label": "CCOD N°6",
+      "createdDate": "20 Avril 2021",
+      "business": [
+        {
+          "id": "1001",
+          "caseNumber": "1",
+          "reference": "Fatou NDAO",
+          "designation": "Demande de bail - lot SN - 150 m² - DN - Grand Yoff",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Dakar",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1002",
+          "caseNumber": "2",
+          "reference": "Sucession de feu Lysse Louis LOPES",
+          "designation": "Demande de bail - lot SN - 188 m² - Code Civil - Rue Wagane Diouf",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Dakar",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1003",
+          "caseNumber": "3",
+          "reference": "Khalifa Ababacar GAYE et 05 autres",
+          "designation": "Demande de baux à Pikine Guédiawaye",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Pikine Guediawaye",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1004",
+          "caseNumber": "4",
+          "reference": "Ablaye LO et 05 autres",
+          "designation": "Demande de baux à Pikine Guédiawaye",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Pikine Guediawaye",
+          "createdDate": "20 Avril 2021"
+        }
+      ]
+    },
+    {
+      "id": "1006",
+      "agendasNumber": "7",
+      "label": "CCOD N°7",
+      "createdDate": "20 Avril 2021",
+      "business": [
+        {
+          "id": "1001",
+          "caseNumber": "1",
+          "reference": "Fatou NDAO",
+          "designation": "Demande de bail - lot SN - 150 m² - DN - Grand Yoff",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Dakar",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1002",
+          "caseNumber": "2",
+          "reference": "Sucession de feu Lysse Louis LOPES",
+          "designation": "Demande de bail - lot SN - 188 m² - Code Civil - Rue Wagane Diouf",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Dakar",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1003",
+          "caseNumber": "3",
+          "reference": "Khalifa Ababacar GAYE et 05 autres",
+          "designation": "Demande de baux à Pikine Guédiawaye",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Pikine Guediawaye",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1004",
+          "caseNumber": "4",
+          "reference": "Ablaye LO et 05 autres",
+          "designation": "Demande de baux à Pikine Guédiawaye",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Pikine Guediawaye",
+          "createdDate": "20 Avril 2021"
+        }
+      ]
+    },
+    {
+      "id": "1007",
+      "agendasNumber": "8",
+      "label": "CCOD N°8",
+      "createdDate": "20 Avril 2021",
+      "business": [
+        {
+          "id": "1001",
+          "caseNumber": "1",
+          "reference": "Fatou NDAO",
+          "designation": "Demande de bail - lot SN - 150 m² - DN - Grand Yoff",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Dakar",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1002",
+          "caseNumber": "2",
+          "reference": "Sucession de feu Lysse Louis LOPES",
+          "designation": "Demande de bail - lot SN - 188 m² - Code Civil - Rue Wagane Diouf",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Dakar",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1003",
+          "caseNumber": "3",
+          "reference": "Khalifa Ababacar GAYE et 05 autres",
+          "designation": "Demande de baux à Pikine Guédiawaye",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Pikine Guediawaye",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1004",
+          "caseNumber": "4",
+          "reference": "Ablaye LO et 05 autres",
+          "designation": "Demande de baux à Pikine Guédiawaye",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Pikine Guediawaye",
+          "createdDate": "20 Avril 2021"
+        }
+      ]
+    },
+    {
+      "id": "1008",
+      "agendasNumber": "9",
+      "label": "CCOD N°9",
+      "createdDate": "20 Avril 2021",
+      "business": [
+        {
+          "id": "1001",
+          "caseNumber": "1",
+          "reference": "Fatou NDAO",
+          "designation": "Demande de bail - lot SN - 150 m² - DN - Grand Yoff",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Dakar",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1002",
+          "caseNumber": "2",
+          "reference": "Sucession de feu Lysse Louis LOPES",
+          "designation": "Demande de bail - lot SN - 188 m² - Code Civil - Rue Wagane Diouf",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Dakar",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1003",
+          "caseNumber": "3",
+          "reference": "Khalifa Ababacar GAYE et 05 autres",
+          "designation": "Demande de baux à Pikine Guédiawaye",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Pikine Guediawaye",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1004",
+          "caseNumber": "4",
+          "reference": "Ablaye LO et 05 autres",
+          "designation": "Demande de baux à Pikine Guédiawaye",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Pikine Guediawaye",
+          "createdDate": "20 Avril 2021"
+        }
+      ]
+    },
+    {
+      "id": "1009",
+      "agendasNumber": "10",
+      "label": "CCOD N°10",
+      "createdDate": "20 Avril 2021",
+      "business": [
+        {
+          "id": "1001",
+          "caseNumber": "1",
+          "reference": "Fatou NDAO",
+          "designation": "Demande de bail - lot SN - 150 m² - DN - Grand Yoff",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Dakar",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1002",
+          "caseNumber": "2",
+          "reference": "Sucession de feu Lysse Louis LOPES",
+          "designation": "Demande de bail - lot SN - 188 m² - Code Civil - Rue Wagane Diouf",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Dakar",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1003",
+          "caseNumber": "3",
+          "reference": "Khalifa Ababacar GAYE et 05 autres",
+          "designation": "Demande de baux à Pikine Guédiawaye",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Pikine Guediawaye",
+          "createdDate": "20 Avril 2021"
+        },
+        {
+          "id": "1004",
+          "caseNumber": "4",
+          "reference": "Ablaye LO et 05 autres",
+          "designation": "Demande de baux à Pikine Guédiawaye",
+          "caseType": "AFFAIRES IMMOBILIERES",
+          "category": "Régularisations",
+          "csf": "Pikine Guediawaye",
+          "createdDate": "20 Avril 2021"
+        }
+      ]
+    }
+  ]
+}

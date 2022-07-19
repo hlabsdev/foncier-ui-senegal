@@ -1,0 +1,64 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="container-fluid px-0">
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{ 'HEADER.REGISTRE_FORMALITY' | translate}}</h1>
+    </div>
+  </div>
+
+  <div class="row no-gutters px-3">
+    <div class="col-3 pr-2">
+      <p-dropdown styleClass="form-control w-100" [options]="searchFields" name="searchCols" [(ngModel)]="searchField">
+      </p-dropdown>
+    </div>
+
+    <div class="col-9 pl-2">
+      <div class="input-group">
+        <input type="text" name="search" class="form-control" pInputText [(ngModel)]="searchText" size="50"
+          placeholder="{{'COMMON.LABELS.SEARCH' | translate}}">
+        <button pButton type="button" icon="fa fa-search" class="ui-button-warn view-button search-bar-button"
+          (click)="searchRFP()"></button>
+      </div>
+    </div>
+  </div>
+
+  <p-table #rfp *ngIf="preregistrationFormalies && preregistrationFormalies.length" [columns]="cols"
+    [value]="preregistrationFormalies" dataKey="id" [paginator]="true" [rows]="rows" lazy="true"
+    [totalRecords]="totalRecords" (onLazyLoad)="loadRFP($event)">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th style="width: 3em"></th>
+        <th *ngFor="let col of columns">
+          {{col.header | translate}}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
+      <tr>
+        <td>
+          <a href="#" [pRowToggler]="rowData">
+            <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+          </a>
+        </td>
+        <td *ngFor="let col of columns">
+          <ng-container *ngIf="col.field === 'date'; else default">
+            <span> {{ rowData[col.field] | specificTimezone | localeDate:'longDate' }} </span>
+          </ng-container>
+          <ng-template #default>
+            <ng-container>
+              <span> {{ rowData[col.field] }}</span>
+            </ng-container>
+          </ng-template>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+      <tr>
+        <td [attr.colspan]="columns.length + 1">
+          <app-workstation [preregistrationFormality]="rowData" [readOnly]="true" [form]="cForm"></app-workstation>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

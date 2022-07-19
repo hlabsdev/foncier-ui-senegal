@@ -1,0 +1,96 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="container-fluid px-0">
+    <!-- route name and buttons -->
+    <br />
+    <div class="row no-gutters px-3">
+        <div class="col-6 d-flex">
+            <h1 class="my-auto">{{ 'DELEGATION.TITLE_LIST' | translate}}</h1>
+        </div>
+    </div>
+    <!-- search bar and filters dropdown -->
+    <br />
+    <div class="row no-gutters mb-3 px-3">
+        <div class="col-12">
+            <app-searchbar *ngIf="cols" [tableCols]="cols" [table]="dataTableDelegation" [enableDropdown]=true>
+            </app-searchbar>
+        </div>
+    </div>
+    <br />
+    <div class="row no-gutters mb-3 px-3">
+        <div class="col-12 d-flex justify-content-end">
+            <p-button type="button" class="view-button  mr-2" (click)="stopDelegation()" label="{{'COMMON.ACTIONS.STOP' | translate}}" ></p-button>
+            <p-button type="button" class="add-button px-1" (click)="showDelegationDialogue(delegationList[0])" label="{{'COMMON.ACTIONS.DELEGATE' | translate}}" ></p-button>
+        </div>
+    </div>
+    <br />
+    <div class="row no-gutters px-3">
+        <div class="col-12">
+            <p-table [columns]="cols" [value]="delegationList" [paginator]="true" [rows]="rowSizes.SMALL"
+                [totalRecords]="totalRecords" lazy="true" (onLazyLoad)="loadDelegationList($event)"
+                #dataTableDelegation>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th rowspan="2" pResizableColumn>{{'DELEGATION.START_DATE' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'DELEGATION.STATUS' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'DELEGATION.MOTIF' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'DELEGATION.END_DATE' | translate}}</th>
+
+                    <tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-delegation let-columns="columns">
+                    <tr>
+                        <td class="cell-ellipsis">{{ delegation?.startDate | date:'shortDate' }}</td>
+                        <td class="cell-ellipsis">{{ delegation?.status }}</td>
+                        <td class="cell-ellipsis">{{ delegation?.motif }}</td>
+                        <td class="cell-ellipsis">{{ delegation?.endDate | date:'shortDate' }}</td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+<!-- dialog -->
+<p-dialog *ngIf="isDelegationhitted" appendTo="body" [closable]="false" [(visible)]="isDelegationhitted" [modal]="true"
+  styleClass="dialog-w600" [maximizable]="true">
+  <div class="container-fluid pr-0 px-0">  
+    <!-- header -->
+    <div class="row mx-3 mb-3 pl-0 py-3 bg-white">
+        <!-- title -->
+        <div class="col-6 d-flex my-auto pl-0">
+          <h1 class="mb-0">
+            <span> {{'DELEGATION.MOTIF_HEADER' | translate}}</span>
+          </h1>
+        </div>
+    </div>
+
+  <!-- details -->
+  <div class="card">
+            <div class="row container-fluid pr-0">
+                <div class="col-12 pr-0">
+                    <textarea class="form-control" name="initialContext" id="initialContext"
+                    placeholder="{{'DELEGATION.MOTIF' | translate}}" ></textarea>
+                </div>
+            </div>
+            <br/>
+            <div class="row container-fluid pr-0">
+                    <label class="col-md-2 col-form-label">{{'DELEGATION.END_DATE' | translate }}</label>
+                    <div class="col-md-5">
+                        <p-calendar [maxDate]="today" appendTo="body" inputStyleClass="form-control"
+                            [dateFormat]="locale.dateFormat" [locale]="locale" [monthNavigator]="true"
+                            [yearNavigator]="true" [yearRange]="yearRange" styleClass="w-100" [showTime]="false">
+                        </p-calendar>
+                    </div> 
+                    <p-button type="button" (click)="cancelDelegation()" label="{{'COMMON.ACTIONS.CANCEL' | translate}}"
+                    icon="fa fa-undo" class="cancel-button col-md-2"></p-button>
+                    <p-button type="button" (click)="saveDelegation()" label="{{'COMMON.ACTIONS.SAVE' | translate}}" icon="fa fa-check"
+                    class="save-button col-md-2"></p-button>
+            </div>
+ </div>
+</div>
+</p-dialog>

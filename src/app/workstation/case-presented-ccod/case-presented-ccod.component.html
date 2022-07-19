@@ -1,0 +1,65 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="container-fluid px-0">
+    <!-- route name and buttons -->
+    <br />
+    <div class="row no-gutters px-3">
+        <div class="col-6 d-flex">
+            <h1 class="my-auto">{{ 'CASE_PRESENTED_CCOD.TITLE_LIST' | translate}}</h1>
+        </div>
+    </div>
+    <!-- search bar and filters dropdown -->
+    <br />
+    <div class="row no-gutters mb-3 px-3">
+        <div class="col-12">
+            <app-searchbar *ngIf="cols" [tableCols]="cols" [table]="dataTableCasePresentedCcod" [enableDropdown]=true>
+            </app-searchbar>
+        </div>
+    </div>
+    <br />
+    <div class="row no-gutters px-3">
+        <div class="col-12">
+            <p-table [columns]="cols" [value]="casePresentedCcodList" [paginator]="true" [rows]="rowSizes.SMALL"
+                [totalRecords]="totalRecords" lazy="true" (onLazyLoad)="loadCasePresentedCcodList($event)"
+                #dataTableCasePresentedCcod>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th rowspan="2" pResizableColumn>{{'CASE_PRESENTED_CCOD.DEPOSIT_DATE' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'CASE_PRESENTED_CCOD.NUMBER' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'CASE_PRESENTED_CCOD.REFERENCE_NUMBER' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'CASE_PRESENTED_CCOD.REQUEST_NAME' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'CASE_PRESENTED_CCOD.PURPOSE' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'CASE_PRESENTED_CCOD.REQUESTER_TYPE' | translate}}</th>
+                        <th rowspan="2" pResizableColumn>{{'COMMON.ACTIONS.ACTION' | translate}}</th>
+
+                    <tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-casePresented let-columns="columns">
+                    <tr>
+                        <td class="cell-ellipsis">{{ casePresented?.depositDate | date:'shortDate' }}</td>
+                        <td class="cell-ellipsis">{{ casePresented?.application.applicationNumber }}</td>
+                        <td class="cell-ellipsis">{{ casePresented?.application.referenceNumber }}</td>
+                        <td class="cell-ellipsis">{{ casePresented?.application.applicant.displayName }}</td>
+                        <td class="cell-ellipsis">{{ casePresented?.application.applicationPurpose }}</td>
+                        <!-- <td class="cell-ellipsis">{{ 'APPLICATION.STATUS.'+rowData?.status | translate }}</td> -->
+                        <td class="cell-ellipsis">
+                            {{ (casePresented?.application.applicant.type==1? 'CODELIST.VALUES.APPLICANT_NATURAL_PERSON' :
+                            'CODELIST.VALUES.APPLICANT_NON_NATURAL_PERSON') | translate }}
+                        </td>
+
+                        <td>
+                            <p-button type="button" class="view-button  mr-2"
+                                (click)="showCasePresentedDialogue(casePresented)"
+                                label="{{'COMMON.ACTIONS.VIEW' | translate}}" icon="fa fa-search"></p-button>
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

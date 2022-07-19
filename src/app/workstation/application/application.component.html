@@ -1,0 +1,200 @@
+<form #applicationForm="ngForm" (ngSubmit)="save(applicationForm)"
+      [ngClass]="{'was-validated': applicationForm.submitted}" novalidate>
+  <div class="container-fluid px-0">
+
+    <div class="row no-gutters p-3 mb-2">
+      <!-- title -->
+      <div class="col-6">
+        <h1 class="my-auto"> {{ title | translate }}</h1>
+      </div>
+
+    </div>
+
+    <app-links [formVariables]="formVariables" [showLinks]="showLinks"></app-links>
+
+    <div class="row no-gutters">
+      <div class="col-12">
+        <div class="row no-gutters px-3 mb-3">
+          <core-alert *ngIf="this.errorMessage" [local]="true" [message]="errorMessage"></core-alert>
+        </div>
+        <div class="row no-gutters px-3 mb-3">
+          <label for="name" class="col-4 col-form-label">{{'APPLICATION.DATE' | translate}} <span
+            class="text-info">*</span>
+          </label>
+          <div class="col-8">
+            <p-calendar [maxDate]="today" appendTo="body" name="application.applicationDate"
+                        inputStyleClass="form-control" [dateFormat]="locale.dateFormat" [locale]="locale"
+                        [monthNavigator]="true"
+                        [yearNavigator]="true" [yearRange]="yearRange" styleClass="w-100" [showTime]="false"
+                        [(ngModel)]="application.applicationDate" [disabled]="formVariables.isReadOnly || readOnly"
+                        [required]="true">
+            </p-calendar>
+          </div>
+        </div>
+
+        <div class="row no-gutters px-3 mb-3">
+          <label for="name" class="col-4 col-form-label">{{'APPLICATION.NUMBER' | translate}}
+          </label>
+          <div class="col-8">
+            <input pInputText class="form-control" name="application.applicationNumber"
+                   placeholder="{{'APPLICATION.NUMBER' | translate}}" [(ngModel)]="application.applicationNumber"
+                   [readonly]="true">
+          </div>
+        </div>
+
+        <div class="row no-gutters px-3 mb-3">
+          <label for="name" class="col-4 col-form-label">{{'APPLICATION.REFERENCE_NUMBER' | translate}}
+          </label>
+          <div class="col-8">
+            <input pInputText class="form-control" name="application.referenceNumber"
+                   placeholder="{{'APPLICATION.REFERENCE_NUMBER' | translate}}"
+                   [(ngModel)]="application.referenceNumber"
+                   [readonly]="formVariables.isReadOnly || readOnly">
+          </div>
+        </div>
+
+        <div class="row no-gutters px-3 mb-3">
+          <label for="name" class="col-4 col-form-label">{{'APPLICATION.RESPONSIBLE_OFFICE' | translate}} <span
+            class="text-info">*</span>
+          </label>
+          <div class="col-8">
+            <p-dropdown styleClass="form-control w-100 col-form-label" [options]="responsibleOffices"
+                        [(ngModel)]="application.responsibleOffice" name="application.responsibleOffice"
+                        [disabled]="formVariables.isReadOnly || noModification" required>
+            </p-dropdown>
+          </div>
+        </div>
+
+        <div class="row no-gutters px-3 mb-3">
+          <label for="name" class="col-4 col-form-label">{{'APPLICATION.REQUESTER_TYPE' | translate}}<span
+            class="text-info">*</span>
+          </label>
+          <div class="col-8">
+            <p-dropdown styleClass="form-control w-100 col-form-label" name="application.applicationRequesterType"
+                        [(ngModel)]="application.applicant.type" [options]="taxPayerTypes"
+                        (onChange)="selectTaxPayerType($event)"
+                        [disabled]="formVariables.isReadOnly || readOnly" required>
+            </p-dropdown>
+          </div>
+        </div>
+
+        <div class="row no-gutters px-3 mb-3" *ngIf="individualType || enterpriseType">
+          <label for="name" class="col-4 col-form-label">{{'APPLICATION.REQUESTER' | translate}} <span
+            class="text-info">*</span>
+          </label>
+          <div class="col-8">
+            <input type="text" pInputText id="applicationRequester"
+                   placeholder="{{'APPLICATION.REQUESTER' | translate}}" name="application.applicationRequester"
+                   [(ngModel)]="application.applicant.sinCode" [pattern]="validationService.alphanumericRegEx.source"
+                   [readonly]="formVariables.isReadOnly || readOnly" required>
+            <button pButton type="button" id="applicationRequesterBtn" icon="pi pi-search" styleClass="w-100"
+                    class="ui-button-warn" [disabled]="formVariables.isReadOnly || readOnly"
+                    (click)="searchRequester()">
+            </button>
+          </div>
+        </div>
+
+        <div class="row no-gutters px-3 mb-3" *ngIf="individualType">
+          <label for="name" class="col-4 col-form-label">{{'APPLICATION.INDIVIDUAL.FIRST_NAME' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="application.applicant.firstName" class="form-control"
+                   [(ngModel)]="application.applicant.firstName" [readonly]="true">
+          </div>
+          <label for="name" class="col-4 col-form-label">{{'APPLICATION.INDIVIDUAL.LAST_NAME' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="application.applicant.lastName" class="form-control"
+                   [(ngModel)]="application.applicant.lastName" [readonly]="true">
+          </div>
+          <label for="name" class="col-4 col-form-label">{{'APPLICATION.INDIVIDUAL.EMAIL_ADDRESS' | translate}}</label>
+          <div class="col-8">
+            <input pInputText name="application.applicPHBsaXN0PjxkaWN0PjxrZXk+cHJvZHVjdDwva2V5PjxzdHJpbmc+QmFiZWxFZGl0PC9zdHJpbmc+PGtleT5saWNlbnNlVHlwZTwva2V5PjxzdHJpbmc+PC9zdHJpbmc+PC9kaWN0PjwvcGxpc3Q+
+ant.email" class="form-control"
+                   [(ngModel)]="application.applicant.email" [readonly]="true">
+          </div>
+        </div>
+
+        <div class="row no-gutters px-3 mb-3" *ngIf="enterpriseType">
+          <label for="name"
+                 class="col-4 col-form-label">{{'APPLICATION.ENTERPRISE.REGISTERED_NAME' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="application.applicant.registeredName"
+                   [(ngModel)]="application.applicant.registeredName" class="form-control" [readonly]="true">
+          </div>
+          <label for="name"
+                 class="col-4 col-form-label">{{'APPLICATION.ENTERPRISE.ENTERPRISE_TYPE' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="application.applicant.enterpriseType"
+                   [(ngModel)]="application.applicant.enterpriseType" class="form-control" [readonly]="true">
+          </div>
+          <label for="name" class="col-4 col-form-label">{{'APPLICATION.ENTERPRISE.STREET_NAME' | translate}}</label>
+          <div class="col-8 mb-2">
+            <input pInputText name="application.applicant.streetName" [(ngModel)]="application.applicant.streetName"
+                   class="form-control" [readonly]="true">
+          </div>
+          <label for="name" class="col-4 col-form-label">{{'APPLICATION.ENTERPRISE.REGION' | translate}}</label>
+          <div class="col-8">
+            <input pInputText name="application.applicant.region" [(ngModel)]="application.applicant.region"
+                   class="form-control" [readonly]="true">
+          </div>
+        </div>
+
+        <div class="row no-gutters px-3 mb-3">
+          <label for="name" class="col-4 col-form-label">{{'APPLICATION.PURPOSE' | translate}}
+          </label>
+          <div class="col-8">
+            <textarea pInputTextarea class="form-control" autocomplete="off" name="application.applicationPurpose"
+                      placeholder="{{'APPLICATION.PURPOSE' | translate}}" id="applicationPurpose" type="text"
+                      [required]="false"
+                      [(ngModel)]="application.applicationPurpose" [disabled]="formVariables.isReadOnly">
+                </textarea>
+          </div>
+        </div>
+
+        <div class="row no-gutters px-3 mb-3">
+          <label for="name" class="col-4 col-form-label">
+            {{'APPLICATION.URGENT' | translate}}
+          </label>
+          <div class="col-8">
+            <p-checkbox [(ngModel)]="application.urgentApplication" name="application.urgentApplication"
+                        [disabled]="formVariables.isReadOnly" binary="true"></p-checkbox>
+          </div>
+        </div>
+
+        <div class="row no-gutters px-3 mb-3">
+          <label for="name" class="col-4 col-form-label">
+            {{'APPLICATION.EXTERNAL_APPLICANT' | translate}}
+          </label>
+          <div class="col-8">
+            <p-checkbox [(ngModel)]="application.externalApplicant" (onChange)="showExt($event)" name="application.externalApplicant"
+                        [disabled]="formVariables.isReadOnly" binary="true"></p-checkbox>
+          </div>
+        </div>
+
+        <div class="row no-gutters px-3 mb-3">
+          <label for="name" class="col-4 col-form-label">{{'APPLICATION.IMPUTATION_OFFICE' | translate}} <span
+            class="text-info">*</span>
+          </label>
+          <div class="col-8">
+            <p-dropdown styleClass="form-control w-100 col-form-label" [options]="responsibleOffices"
+                        [(ngModel)]="application.imputationOffice" name="application.imputationOffice"
+                        [disabled]="formVariables.isReadOnly || readOnly" required>
+            </p-dropdown>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+    <div class="col-12">
+      <div class="pull-right mb-3">
+        <p-button type="button" label=" {{'COMMON.ACTIONS.CANCEL' | translate}}" icon="fa fa-undo"
+                  class="cancel-button mr-2" (click)="cancel()">
+        </p-button>
+        <p-button type="submit" label="{{'COMMON.ACTIONS.SAVE' | translate}}" icon="fa fa-floppy-o"
+                  class="save-button" [hidden]="formVariables.isReadOnly || readOnly">
+        </p-button>
+      </div>
+    </div>
+  </div>
+</form>

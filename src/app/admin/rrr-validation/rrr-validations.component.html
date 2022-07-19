@@ -1,0 +1,98 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="container-fluid px-0">
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{ 'RRR_VALIDATION.TITLE_LIST' | translate}}</h1>
+    </div>
+
+    <div class="col-6 d-flex justify-content-end">
+
+      <!--      <p-button [hidden]='formVariables.isReadOnly || this.rrrValidationsUrl || !this._options.add' type="button"-->
+
+      <p-button *ngIf="this.rrrValidationsUrl" [hidden]='false' type="button" class="add-button"
+        icon="icon icon-add-eland" label="{{'COMMON.ACTIONS.ADD' | translate}}" (click)="showRRRValidationDialogue()">
+      </p-button>
+    </div>
+  </div>
+
+  <!-- searchbar and filters dropdown -->
+  <div class="row no-gutters px-3 mb-3">
+    <div class="col-12">
+      <app-searchbar *ngIf="cols" [tableCols]="cols" [table]="dataTableRRRValidations" [enableDropdown]="true">
+      </app-searchbar>
+    </div>
+  </div>
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <div class="col-12">
+      <p-table [columns]="cols" [value]="rrrValidations" [rows]="rowSizes.SMALL" [paginator]="true"
+        #dataTableRRRValidations>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngIf="!this.rrrValidationsUrl">
+              {{'COMMON.ACTIONS.SELECT' | translate}}
+            </th>
+            <th *ngIf="!this.rrrValidationsUrl">
+              {{'RRR_VALIDATION.RRR_REQUIRED' | translate}}
+            </th>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" class="text-dark font-weight-bold">
+              <div class="d-flex">
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+                <span class="ml-2">{{col.header}}</span>
+              </div>
+            </th>
+            <th class="text-dark font-weight-bold">{{'COMMON.ACTIONS.ACTION' | translate}}</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-row let-rrrValidation>
+          <tr>
+            <td *ngIf="!this.rrrValidationsUrl">
+              <p-checkbox [(ngModel)]="rrrValidation.checked" name="checked" binary="true"
+                (onChange)="selectRRRValidation(rrrValidation)"></p-checkbox>
+            </td>
+            <td *ngIf="!this.rrrValidationsUrl">
+              <p-checkbox [disabled]="!rrrValidation.checked" [(ngModel)]="rrrValidation.requiredRRR" name="requiredRRR"
+                binary="true" (onChange)="selectRRRValidation(rrrValidation)">
+              </p-checkbox>
+            </td>
+            <td>{{rrrValidation.label}}</td>
+            <td>{{'RRR.TYPES.' + rrrValidation.rrrType | translate}}</td>
+            <td>{{rrrValidation.subType }}</td>
+            <td>{{'CODELIST.VALUES.' + rrrValidation.type.value | translate}}</td>
+            <td>
+              <div *ngIf="this.rrrValidationsUrl">
+                <p-button type="button" icon="icon icon-edit-eland" class="edit-button mr-3 mt-2"
+                  label="{{'COMMON.ACTIONS.EDIT' | translate}}" (click)="showRRRValidationDialogue(rrrValidation)">
+                </p-button>
+                <p-button type="button" *ngIf="!rrrValidation.haveAssociatedTransactions" icon="fa fa-times"
+                  class="delete-button mt-2" label="{{'COMMON.ACTIONS.DELETE' | translate}}"
+                  (click)="removeRRRValidation(rrrValidation)"></p-button>
+              </div>
+              <div *ngIf="!this.rrrValidationsUrl">
+                <p-button type="button" icon="fa fa-search" class="view-button mr-3 mt-2"
+                  label="{{'COMMON.ACTIONS.VIEW' | translate}}" (click)="showRRRValidationDialogue(rrrValidation)">
+                </p-button>
+              </div>
+
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<!-- dialog -->
+<app-dialog appendTo="body" [(display)]="rrrValidation" modal="modal" #rrrValidationDialog>
+  <app-rrr-validation [rrrValidation]="rrrValidation" *ngIf="rrrValidation" [persistToDB]="persistToDb"
+    [readOnly]="!rrrValidationsUrl" [formVariables]="formVariables" [rrrValidationsUrl]="rrrValidationsUrl"
+    [baUnit]="baUnit" (canceled)="cancelRRRValidation()" (saved)="saveRRRValidation($event)"></app-rrr-validation>
+</app-dialog>

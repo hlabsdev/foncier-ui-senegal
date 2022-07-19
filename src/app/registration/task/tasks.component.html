@@ -1,0 +1,107 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="ui-g ui-fluid tasklist-filter">
+  <div class="ui-g-5 ui-md-6">
+    <p-dropdown (onChange)="loadTasks({getCount:true})" [options]="transactions" [showClear]="true"
+      [(ngModel)]="selectedTransaction" filter="true"> </p-dropdown>
+  </div>
+  <div class="ui-g-7 ui-md-6">
+    <div class="ui-inputgroup">
+      <input class="input btn" name="search" autocomplete="off" type="search" placeholder="{{'TASK.NAME' | translate}}"
+        pInputText [(ngModel)]="search" (input)="loadTasks({getCount:true})" autofocus>
+    </div>
+  </div>
+</div>
+
+<div class="ui-g ui-fluid tasklist-sort">
+  <div class="ui-g-12 ui-md-12">
+    <p-selectButton [options]="searchTypes" (onChange)="loadTasks({getCount:true})" [(ngModel)]="searchType">
+    </p-selectButton>
+  </div>
+  <div class="ui-g-12 ui-md-1"></div>
+</div>
+
+<div class="ui-g ui-fluid tasklist-search-results">
+  <div class="info text-center ui-g-12">
+    {{'COMMON.ACTIONS.SEARCH_RESULTS'| translate}}
+    <span>{{totalRecords}}</span>
+    <span *ngIf="search">{{search}}</span>
+  </div>
+</div>
+
+<div class="ui-g ui-fluid tasklist-categorize">
+  <div class="ui-g-12 ui-md-12">
+    <button type="button" (click)="filterTasks(taskFilters.CLAIMED_TASKS)" class="btn btn-mytasks btn-sm"
+      [class.active]="isActive('btn1')" (click)="setActive('btn1')">
+      {{'HEADER.MY_TASKS'| translate}}</button>
+    <button type="button" (click)="filterTasks(taskFilters.UNCLAIMED_TASKS)" class="btn btn-myclaims btn-sm"
+      [class.active]="isActive('btn2')" (click)="setActive('btn2')">
+      {{'COMMON.ACTIONS.CLAIM'| translate}}</button>
+    <button type="button" (click)="filterTasks(taskFilters.ALL_TASKS)" class="btn btn-alltasks btn-sm"
+      [class.active]="isActive('btn3')" (click)="setActive('btn3')">
+      {{'HEADER.ALL_TASKS'| translate}}</button>
+  </div>
+</div>
+
+<div class="ui-g ui-fluid tasklist-urgent">
+  <div class="ui-g-12 ui-md-12">
+    {{'TASK.URGENT' | translate}} <p-checkbox (onChange)="loadTasks({getCount:true})" [(ngModel)]="urgentTransaction"
+      name="urgentTransaction" binary="true"></p-checkbox>
+  </div>
+</div>
+
+<p-table #tasksTable id="tasks-table" [columns]="cols" [value]="tasks" [resizableColumns]="true" [lazy]="true"
+  (onLazyLoad)="loadTasks({getCount:true},$event)" [totalRecords]="totalRecords" [rows]="rowSizes.SMALL"
+  [paginator]="true" (onPage)="getNextPage($event)" [sortField]="currentSortField" [sortOrder]="currentSortOrder">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th pResizableColumn style="width:38%" pSortableColumn="name">
+        <p-sortIcon field="name"></p-sortIcon>
+        <span class="ml-1" translate>TASK.TASK</span>
+      </th>
+      <th pResizableColumn style="width:22%" pSortableColumn="created">
+        <p-sortIcon field="created"></p-sortIcon>
+        <span class="ml-1" translate>TASK.MODIFIED</span>
+      </th>
+      <th pResizableColumn style="width:20%" *ngIf="sidebarFormat === 'large'" pSortableColumn="processDefinitionId">
+        <p-sortIcon field="processDefinitionId"></p-sortIcon>
+        <span class="ml-1" translate>TASK.PROCESS_DEFINITION_ID</span>
+      </th>
+      <th pResizableColumn style="width:10%"><span class="ml-1">{{'COMMON.ACTIONS.ACTION' | translate}}</span></th>
+    </tr>
+  </ng-template>
+
+  <!-- populates the table body -->
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr [ngClass]="{'active-task': rowData['id'] === selectedTaskId}">
+      <td>
+        <span>{{rowData.name}}</span>
+      </td>
+      <td>
+        <span>
+          {{sidebarFormat === 'medium' ? ( rowData.created | specificTimezone | localeDate ) : (
+          rowData.created | specificTimezone | localeDate:'longDate')}}
+        </span>
+      </td>
+      <td *ngIf="sidebarFormat === 'large'">
+        <span>
+          {{rowData.processDefinitionId.split(':')[0]}}
+        </span>
+      </td>
+      <td>
+        <p-triStateCheckbox class="mr-3" (click)="checkboxTrigger(rowData)"
+          [ngClass]="{'blue-checkbox': rowData.assignee === user.username, 'yellow-checkbox': rowData.assignee === null, 'red-checkbox': (rowData.assignee !== null && rowData.assignee !== user.username)}"
+          pTooltip="{{'COMMON.ACTIONS.SELECT_TASK' | translate}}" tooltipPosition="top" life="4000">
+        </p-triStateCheckbox>
+        <p-button [hidden]="rowData.assignee !== user.username" type="button" label="" icon="icon icon-displace-eland"
+          class="unclaim-button" (click)="unclaim(rowData, user)" pTooltip="{{'COMMON.ACTIONS.UNCLAIM' | translate}}"
+          tooltipPosition="top" life="4000">
+        </p-button>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+  </ng-template>
+</p-table>

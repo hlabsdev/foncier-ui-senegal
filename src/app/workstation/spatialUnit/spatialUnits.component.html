@@ -1,0 +1,112 @@
+<div class="container-fluid px-0">
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{(this.spatialUnitUrl ? 'SPATIAL_UNIT.TITLE' : listTitle) | translate}}</h1>
+    </div>
+
+    <div class=" col-6 d-flex justify-content-end">
+      <p-button [hidden]='formVariables.isReadOnly || this.spatialUnitUrl' type="button" class="add-button"
+        type="button" icon="icon icon-add-eland" label="{{'COMMON.ACTIONS.ADD' | translate}}"
+        (click)="showSpatialUnitDialog()">
+      </p-button>
+
+      <p-button *ngIf="!picker && !showBuildingPicker && hasMainParcel"
+        [hidden]='formVariables.isReadOnly || this.spatialUnitUrl' type="button" class="add-button ml-3" type="button"
+        icon="fa fa-copy" label="{{'COMMON.ACTIONS.ADD_SUB_SPATIAL_UNIT' | translate}}"
+        (click)="showSpatialUnitPickerDialog()">
+      </p-button>
+    </div>
+  </div>
+
+  <!-- searchbar and filters dropdown -->
+  <div class="row no-gutters mb-3 px-3">
+    <div class="col-12">
+      <app-searchbar *ngIf="cols" [tableCols]="cols" [table]="dataTableSpatialUnits"
+        [enableDropdown]=!showBuildingPicker>
+      </app-searchbar>
+    </div>
+  </div>
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <div class="col-12">
+      <p-table [value]="spatialUnits" [resizableColumns]="true" [rows]="rowSizes.SMALL" [columns]="cols"
+        [paginator]="true" #dataTableSpatialUnits>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" pResizableColumn [style]="{'width':col.width}" [pSortableColumn]="col.field"
+              class="text-dark font-weight-bold">
+              <div class="d-flex">
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+                <span class="ml-1">{{col.header}}</span>
+              </div>
+            </th>
+            <th *ngIf="displayActionHeader" pResizableColumn style="width:8%" class="text-dark font-weight-bold">
+              {{'COMMON.ACTIONS.ACTION' | translate}}</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-spatialUnit>
+          <tr>
+            <td>{{spatialUnit.id}}</td>
+            <td>{{spatialUnit.type}}</td>
+            <td *ngIf="!showBuildingPicker">{{spatialUnit.parcelType}}</td>
+            <td *ngIf="!showBuildingPicker">{{spatialUnit.parentParcel}}</td>
+            <td *ngIf="!showBuildingPicker">{{spatialUnit.radiationDate | date:'shortDate'}}</td>
+            <td *ngIf="!showBuildingPicker">{{spatialUnit.destinationTitle}}</td>
+            <td *ngIf="!showBuildingPicker">{{spatialUnit.inscriptionDate | date:'shortDate'}}</td>
+            <td *ngIf="!showBuildingPicker">{{spatialUnit.sourceTitle}}</td>
+            <td>{{spatialUnit.modDate | date:'shortDate'}}</td>
+            <td *ngIf="displayViewEditButton">
+              <p-button type="button"
+                *ngIf="!picker && !showBuildingPicker && (formVariables.isReadOnly || this.spatialUnitUrl)"
+                class="edit-button mr-2" icon="fa fa-search" pTooltip="{{'COMMON.ACTIONS.VIEW'| translate}}"
+                tooltipPosition="top" life="4000"
+                (click)="showSpatialUnitDialog(spatialUnit, (formVariables.isReadOnly || this.spatialUnitUrl))">
+              </p-button>
+
+              <p-button type="button"
+                *ngIf="!picker && !showBuildingPicker && !(formVariables.isReadOnly || this.spatialUnitUrl)"
+                class="view-button mr-2" icon="icon icon-edit-eland" pTooltip="{{'COMMON.ACTIONS.EDIT' | translate}}"
+                tooltipPosition="top" life="4000"
+                (click)="showSpatialUnitDialog(spatialUnit, (formVariables.isReadOnly || this.spatialUnitUrl))">
+              </p-button>
+
+              <p-button [hidden]="deleteButtonHidden || spatialUnit.registrationDate" type="button"
+                *ngIf="displayDeleteButton" class="delete-button" (click)="deleteSpatialUnit(spatialUnit)"
+                icon="fa fa-times" pTooltip="{{'COMMON.ACTIONS.DELETE' | translate}}" tooltipPosition="top" life="4000">
+              </p-button>
+
+              <p-button [hidden]="formVariables.isReadOnly || this.spatialUnitUrl" type="button"
+                *ngIf="picker || showBuildingPicker" class="delete-button"
+                (click)="spatialUnitPickerDeleteSpatialUnit(spatialUnit)" icon="fa fa-times"
+                pTooltip="{{'COMMON.ACTIONS.DELETE' | translate}}" tooltipPosition="top" life="4000"></p-button>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<app-dialog appendTo="body" [(display)]="spatialUnit" modal="modal" #dd [autoHeight]="false">
+  <app-spatial-unit *ngIf="spatialUnit && !picker && !showSpatialUnitPicker && !showBuildingPicker"
+    [spatialUnit]="spatialUnit" [persistToDB]="persistToDb" [readOnly]="formVariables.isReadOnly || this.spatialUnitUrl"
+    [isNewRegister]="isNewRegister" [spatialUnitUrl]="spatialUnitUrl" [formVariables]="formVariables"
+    (canceled)="cancelSpatialUnit()" (saved)="saveSpatialUnit($event)">
+  </app-spatial-unit>
+  <app-spatial-unit-picker *ngIf="picker" [formVariables]="formVariables"
+    (saved)="spatialUnitPickerAddSpatialUnit($event)">
+  </app-spatial-unit-picker>
+  <app-spatial-unit-picker *ngIf="showSpatialUnitPicker" [header]="parentSelectionPickerHeader"
+    [formVariables]="formVariables" [onlyTerrains]="true" (saved)="handleParentSelection($event)">
+  </app-spatial-unit-picker>
+  <app-spatial-unit-picker *ngIf="showBuildingPicker" [header]="buildingSelectionPickerHeader"
+    [formVariables]="formVariables" [onlyBuildings]="true" (saved)="spatialUnitPickerAddSpatialUnit($event)">
+  </app-spatial-unit-picker>
+</app-dialog>

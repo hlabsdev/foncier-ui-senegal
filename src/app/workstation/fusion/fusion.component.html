@@ -1,0 +1,86 @@
+<!-- table -->
+<div class="row no-gutters px-3">
+  <div class="row p-3">
+    <label for="name" class="col-4 col-form-label">{{'FUSION.ADD_TITLE' | translate}}<span class="text-info">*</span>
+    </label>
+    <div class="col-2">
+      <p-checkbox  name="isNewTitle" [(ngModel)]="fusion.isNewTitleForFusion" (click)="clickReceptorsCheck()" binary="true" >
+      </p-checkbox>
+    </div>
+    <label for="name" class="col-4 col-form-label">{{'FUSION.ISTOTAL' | translate}}<span class="text-info">*</span>
+    </label>
+    <div class="col-2">
+      <p-checkbox  name="isFragmented" [(ngModel)]="fusion.isTotalFusion" (click)="clickCuttedCheck()" binary="true" >
+      </p-checkbox>
+    </div>
+  </div>
+  <div class="col-12 pt-3 pb-3">
+    <p-button type="button" class="add-button pull-right" icon="icon icon-add-eland" label="{{'FUSION.ADD_TITLE' | translate}}"
+    pTooltip="{{'FUSION.ADD_TITLE' | translate}}" tooltipPosition="top" life="4000"
+    (click)="showBAUnitDialog()">
+  </p-button>
+  </div>
+  <div class="col-12">
+    <p-table [columns]="cols" [value]="fusion.landTitleList" [resizableColumns]="true" [paginator]="true"
+      [rows]="rowSizes.SMALL" [totalRecords]="totalRecords" [lazy]="true" (onLazyLoad)="loadData()"
+      #dataTableSources>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+            <div class="d-flex">
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+              <span class="ml-2">{{col.header}}</span>
+            </div>
+          </th>
+          <th pResizableColumn class="text-dark font-weight-bold">
+            <span>{{'COMMON.ACTIONS.ACTION' | translate}}</span>
+          </th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td *ngFor="let col of columns">
+            <ng-container *ngIf="col.field !== 'isReceptor' && col.field !== 'isCutted'">
+              <span>{{ rowData[col?.field] }}</span>
+            </ng-container>
+            <ng-container *ngIf="col.field === 'isReceptor'">
+              <p-checkbox [(ngModel)]="rowData.isReceptor" (click)="updateReceptorCheck(rowData)" [disabled]="fusion.isNewTitleForFusion" name="isReceptor" binary="true">
+              </p-checkbox>
+            </ng-container>
+            <ng-container *ngIf="col.field === 'isCutted'">
+              <p-checkbox [(ngModel)]="rowData.isCutted" [disabled]="fusion.isTotalFusion" name="isCutted" binary="true">
+              </p-checkbox>
+            </ng-container>
+          </td>
+          <td>
+            <p-button type="button" label="{{'COMMON.ACTIONS.DELETE' | translate}}" icon="fa fa-times"
+            pTooltip="{{'COMMON.ACTIONS.DELETE' | translate}}" tooltipPosition="top" life="4000"
+                class="delete-button ml-3" (click)="deleteTitleFromListe(rowData)" [hidden]="readOnly"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <div class="col-12">
+    <div class="pull-right mb-2">
+      <p-button type="button" label=" {{'COMMON.ACTIONS.CANCEL' | translate}}" icon="fa fa-undo"
+      class="cancel-button mr-2" (click)="cancel()"></p-button>
+        <p-button type="button" (click)="save()" label="{{'COMMON.ACTIONS.SAVE' | translate}}" icon="fa fa-floppy-o" 
+        class="save-button mr-2"></p-button>
+    </div>
+  </div>
+</div>
+
+<p-dialog appendTo="body" [(visible)]="showDialog" [modal]="true" [responsive]="true" styleClass="dialog-class"
+  [maximizable]="true" #baUnitPicker>
+  <app-ba-unit-picker [formVariables]="formVariables"
+    (canceled)="cancel()" (saved)="addTitle($event)"></app-ba-unit-picker>
+</p-dialog>
+
+

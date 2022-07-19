@@ -1,0 +1,118 @@
+<ngx-ui-loader [text]="preloaderMessage"></ngx-ui-loader>
+
+<div class="container-fluid px-0">
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto">{{ 'APPLICATION.TITLE_LIST' | translate}}</h1>
+    </div>
+  </div>
+  <div class="row no-gutters px-3">
+    <div class="col-12">
+      <p-table [columns]="cols" [value]="applications" [paginator]="true" [rows]="rowSizes.SMALL"
+        [totalRecords]="totalRecords" lazy="true" (onLazyLoad)="loadApplications($event)" #dataTableApplications>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th>
+              <div class="ml-3 ui-inputgroup">
+                <input type="text" name="search" class="form-control search-bar-input" pInputText
+                  [(ngModel)]="searchApplicationNumber" size="25" placeholder="{{'APPLICATION.NUMBER' | translate}}"
+                  (keyup.enter)="loadApplications($event)" />
+              </div>
+            </th>
+            <th>
+              <div class="ml-3 ui-inputgroup">
+                <input type="text" name="search" class="form-control search-bar-input" pInputText
+                  [(ngModel)]="searchReferenceNumber" size="25"
+                  placeholder="{{'APPLICATION.REFERENCE_NUMBER' | translate}}"
+                  (keyup.enter)="loadApplications($event)" />
+              </div>
+            </th>
+            <th>
+              <div class="ml-3 ui-inputgroup">
+                <input type="text" name="search" class="form-control search-bar-input" pInputText
+                  [(ngModel)]="searchDisplayFullName" size="25" placeholder="{{'APPLICATION.REQUEST_NAME' | translate}}"
+                  (keyup.enter)="loadApplications($event)" />
+              </div>
+            </th>
+            <th>
+              <div class="ml-3 ui-inputgroup">
+                <p-calendar name="search" placeholder="{{'APPLICATION.DATE' | translate}}" [maxDate]="today"
+                  appendTo="body" inputStyleClass="form-control" [dateFormat]="locale.dateFormat" [locale]="locale"
+                  [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" styleClass="w-100"
+                  [showTime]="false" [(ngModel)]="searchApplicationDate" [showIcon]="false"
+                  (keyup.enter)="loadApplications($event)">
+                </p-calendar>
+              </div>
+            </th>
+            <th>
+              <div class="ml-3 ui-inputgroup">
+                <input type="text" name="search" size="25" class="form-control search-bar-input" pInputText
+                  [(ngModel)]="searchApplicationPurpose" placeholder="{{'APPLICATION.PURPOSE' | translate}}"
+                  (keyup.enter)="loadApplications($event)" />
+              </div>
+            </th>
+            <th>
+              <div class="ml-3 ui-inputgroup">
+                <p-dropdown [options]="mainTypes" appendTo="body" name="search" [autoWidth]="false"
+                  [(ngModel)]="searchStatusCodeList" styleClass="form-control w-100"
+                  (keyup.enter)="loadApplications($event)">
+                </p-dropdown>
+              </div>
+            </th>
+            <!-- <th>
+              <div class="ml-3">
+              </div>
+            </th> -->
+            <th>
+              <div class="ml-3 ui-inputgroup">
+                <button pButton type="button" label="{{'COMMON.ACTIONS.SEARCH_BY' | translate}}"
+                  (click)="loadApplications($event)"></button>
+              </div>
+            </th>
+          <tr>
+          <tr>
+            <th *ngFor="let col of columns" class="" class="cell-ellipsis">
+              <div class="d-flex">
+                <span class="ml-3">{{col.header}}</span>
+              </div>
+            </th>
+            <th>{{'COMMON.ACTIONS.ACTION' | translate}}</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+            <td class="cell-ellipsis">{{ rowData.applicationNumber }}</td>
+            <td class="cell-ellipsis">{{ rowData.referenceNumber }}</td>
+            <td class="cell-ellipsis">{{ rowData?.applicant.displayName }}</td>
+            <td class="cell-ellipsis">{{ rowData.applicationDate | date:'shortDate' }}</td>
+            <td class="cell-ellipsis">{{ rowData?.applicationPurpose }}</td>
+            <td class="cell-ellipsis">{{ 'APPLICATION.STATUS.'+rowData?.status | translate }}</td>
+            <td class="cell-ellipsis">
+              {{ (rowData.applicant.type==1? 'CODELIST.VALUES.APPLICANT_NATURAL_PERSON' : 'CODELIST.VALUES.APPLICANT_NON_NATURAL_PERSON') | translate }}
+            </td>
+
+            <td>
+              <p-button type="button" class="view-button  mr-2" (click)="showApplicantDialogue(rowData)"
+                label="{{'COMMON.ACTIONS.VIEW' | translate}}" icon="fa fa-search"></p-button>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- dialog -->
+<app-dialog appendTo="body" [(display)]="application">
+  <app-application [applicationView]="application" [readOnly]="true" [formVariables]="{isReadOnly: true}"
+    *ngIf="application && application.id" (canceled)="cancelApplication()">
+  </app-application>
+</app-dialog>

@@ -1,0 +1,134 @@
+<div class="row no-gutters">
+  <div class="col-12">
+    <!-- header -->
+    <div class="row d-flex p-3 pb-0 tache-header" *ngIf="task">
+      <!-- title -->
+      <div class="col-6 my-auto">
+        <h2 class="mb-0">{{task.name}}</h2>
+        <p *ngIf="transactionData.transaction.name" class="text-muted">
+          {{'TRANSACTION_INSTANCE.TRANSACTION_NAME' | translate}} :
+          {{ this.transactionData.transaction?.name }}
+        </p>
+      </div>
+
+      <!-- buttons -->
+      <div class="col-6">
+        <div class="pull-right">
+          <p-button type="button" class="no-styles-button mr-2" (click)="goBack()"
+            label=" {{'COMMON.ACTIONS.BACK' | translate}}">
+          </p-button>
+          <p-button *ngIf="claimedByUser" type="button" (click)="showDisplayDialog()" icon="fa fa-check"
+            label=" {{'COMMON.ACTIONS.COMPLETE' | translate}}" class="complete-button">
+          </p-button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row no-gutters">
+      <div class="col-12">
+        <p-tabView *ngIf="task">
+          <p-tabPanel header="{{'TASK.FORM' | translate}}">
+            <app-list-form [forms]="forms" [formVariables]="formVariables" [task]="task" [legacy]="legacy"
+              (canceled)="cancel($event)" (saved)="save($event)"></app-list-form>
+          </p-tabPanel>
+
+          <p-tabPanel header="{{'TASK.DETAILS' | translate}}">
+            <!-- details panel (in re-restyling) -->
+            <div class="row no-gutters p-3">
+              <div class="col-6">
+                <p class="mb-0 text-dark">
+                  <span class="font-weight-bold">{{'TASK.NAME' | translate}} : </span>
+                  <span>{{task.name}}</span>
+                </p>
+
+                <p class="mb-0 text-dark">
+                  <span class="font-weight-bold">{{'TASK.PROCESS' | translate}} : </span>
+                  <span>{{process?.key}}</span>
+                </p>
+                <p class="mb-0 text-dark" *ngIf="transactionData.transaction.name">
+                  <span class="font-weight-bold">{{'TRANSACTION_INSTANCE.TRANSACTION_NAME' | translate}} : </span>
+                  <span>{{transactionData.transaction?.name}}</span>
+                </p>
+                <p class="mb-0 text-dark">
+                  <span class="font-weight-bold">{{'TASK.ASSIGNEE' | translate}} : </span>
+                  <span>{{task.assignee}}</span>
+                </p>
+
+                <p class="mb-0 text-dark">
+                  <span class="font-weight-bold">{{'TASK.DESCRIPTION' | translate}} : </span>
+                  <span>{{task.description}}</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="row no-gutters px-3">
+              <div class="col-12 ">
+                <p-table [value]="taskComments" [columns]="taskCommentsCols" [paginator]="true" [rows]="rowSizes.XSMALL"
+                  dataKey="dateTime">
+                  <ng-template pTemplate="header" let-columns>
+                    <tr>
+                      <th style="width: 3em"></th>
+                      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                        <span class="ml-2">{{col.header}}</span>
+                      </th>
+                    </tr>
+                  </ng-template>
+
+                  <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
+                    <tr>
+                      <td>
+                        <a href="#" [pRowToggler]="rowData">
+                          <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                        </a>
+                      </td>
+                      <td *ngFor="let col of columns">
+                        <ng-container>
+                          <span>{{col.field == 'dateTime'? (rowData[col.field] | date:'short' ) : rowData[col.field]}}</span>
+                        </ng-container>
+                      </td>
+                    </tr>
+                  </ng-template>
+
+                  <!-- additionnal comment information when expanded -->
+                  <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+                    <tr>
+                      <td [attr.colspan]="columns.length + 1">
+                        <div class="ui-g ui-fluid" style="font-size:16px;padding:20px">
+                          <div class="ui-g-12 ui-md-9">
+                            <div class="ui-g">
+                              <span>{{rowData.message}}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-template>
+
+                  <ng-template pTemplate="summary" let-rowData>
+                    <div style="text-align:right">
+                      <p-button type="button" class="add-button" icon="icon icon-add-eland"
+                        (click)="showAddCommentDialog()" label="{{ 'COMMON.ACTIONS.ADD' | translate }}"></p-button>
+                    </div>
+                  </ng-template>
+                </p-table>
+              </div>
+            </div>
+          </p-tabPanel>
+
+          <p-tabPanel header="{{'TASK.WORKFLOW' | translate}}">
+            <ng-template pTemplate="content">
+              <core-wf-viewer *ngIf="processXml" [processXml]="processXml.bpmn20Xml"
+                [currentTask]="task.taskDefinitionKey"></core-wf-viewer>
+
+              <div *ngIf="!processXml">{{'MESSAGES.DIAGRAM_UNAVAILABLE' | translate}}</div>
+            </ng-template>
+          </p-tabPanel>
+        </p-tabView>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-task-dialogs [(taskComments)]="taskComments" (completed)="complete(task, $event)" [variables]="variables"
+  (commentSave)="saveTaskComment($event)"></app-task-dialogs>

@@ -1,0 +1,45 @@
+<section class="inside-page tasks-list-page">
+  <app-quicklinks></app-quicklinks>
+
+  <div class="fluid-container h-100 topaaa">
+    <div class="row no-gutters h-100">
+      <div class="task-menu"
+        [ngClass]="{'task-menu-minimize': sidebarFormat === 'small', 'task-menu-default': sidebarFormat === 'medium', 'task-menu-expand': sidebarFormat === 'large'}">
+        <div class="row no-gutters">
+          <div class="col title-page">
+            <h1>{{'HEADER.TASKS' | translate}}</h1>
+          </div>
+          <div class="col menu-tache-controls">
+            <div class="sidemenu-control">
+              <i class="icon icon-chevron-right-eland" [ngClass]="sidebarFormat === 'small' ? 'menu-state-active' : ''"
+                (click)="changeTaskView('small')"><span> {{'SIDEBAR.MINIMIZE' | translate}} </span>
+              </i>
+              <i class="icon icon-chevron-right-eland" [ngClass]="sidebarFormat === 'medium' ? 'menu-state-active' : ''"
+                (click)="changeTaskView('medium')"><span> {{'SIDEBAR.DEFAULT' | translate}} </span>
+              </i>
+              <i class="icon icon-chevron-right-eland" [ngClass]="sidebarFormat === 'large' ? 'menu-state-active' : ''"
+                (click)="changeTaskView('large')"><span> {{'SIDEBAR.MAXIMIZE' | translate}} </span>
+              </i>
+            </div>
+          </div>
+        </div>
+
+        <p-scrollPanel [ngClass]="{'task-menu-minimize': sidebarFormat === 'small'}"
+          [style]="{width: '100%', height: '100%'}">
+          <app-tasks-list></app-tasks-list>
+        </p-scrollPanel>
+      </div>
+
+      <div class="task-editor"
+        [ngClass]="{'task-editor-minimize': sidebarFormat === 'small', 'task-editor-default': sidebarFormat === 'medium', 'task-editor-expand ': sidebarFormat === 'large'}">
+        <p-scrollPanel *ngIf="taskId" [style]="{width: '100%'}"
+          [ngClass]="{'task-editor-minimize': sidebarFormat === 'small'}">
+          <app-tasks-detail> </app-tasks-detail>
+        </p-scrollPanel>
+        <div *ngIf="!taskId" class="no-tasks-message">
+          <p>{{'SIDEBAR.NO_TASK_OPENED' | translate}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

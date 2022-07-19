@@ -1,0 +1,83 @@
+<div class="container-fluid px-0 " *ngIf="!formVariables.administrativeSourceType">
+  <!-- route name and buttons -->
+  <div class="row no-gutters px-3">
+    <div class="col-6 d-flex">
+      <h1 class="my-auto font-weight-bold">{{ 'SOURCES.TITLE_LIST' | translate}}</h1>
+    </div>
+
+    <div class="col-6 d-flex justify-content-end">
+      <p-button [hidden]="formVariables.isReadOnly || this.sourcesUrl" type="button" class="add-button"
+        (click)="saveSource()" icon="icon icon-add-eland" label="{{'COMMON.ACTIONS.ADD' | translate}}"></p-button>
+    </div>
+  </div>
+
+  <!-- searchbar and filters dropdown -->
+  <div class="row no-gutters mb-3 px-3">
+    <div class="col-12">
+      <app-searchbar *ngIf="cols" [tableCols]="cols" [table]="dataTableSources" [enableDropdown]=true></app-searchbar>
+    </div>
+  </div>
+
+  <!-- table -->
+  <div class="row no-gutters px-3">
+    <div class="col-12">
+      <p-table [columns]="cols" [value]="sourcesToShow" [resizableColumns]="true" [paginator]="true"
+        [rows]="rowSizes.SMALL" [totalRecords]="totalRecords" [lazy]="true" (onLazyLoad)="loadSourcesByPage($event)"
+        #dataTableSources>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn>
+              <div class="d-flex">
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+                <span class="ml-2">{{col.header}}</span>
+              </div>
+            </th>
+            <th pResizableColumn class="text-dark font-weight-bold">
+              <span>{{'COMMON.ACTIONS.ACTION' | translate}}</span>
+            </th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-administrativeSource let-columns="columns">
+          <tr>
+            <td>{{('CODELIST.VALUES.' + administrativeSource?.mainType?.value | translate)}}</td>
+            <td>{{('SOURCE.TYPES.' + administrativeSource?.sourceType | translate)}}</td>
+            <td>{{administrativeSource?.submissionDate | specificTimezone | localeDate}}</td>
+            <td>{{administrativeSource?.extArchive?.fileName}}</td>
+            <td *ngIf="showBaUnitSourcesDetail">{{administrativeSource?.transactionInstance?.transaction?.name}}</td>
+            <td>
+              <p-button [hidden]="formVariables.isReadOnly || this.sourcesUrl" type="button" class="edit-button mr-2"
+                icon="icon icon-edit-eland" pTooltip="{{'COMMON.ACTIONS.EDIT' | translate}}" tooltipPosition="top"
+                life="4000" (click)="saveSource(administrativeSource)"></p-button>
+              <p-button type="button" class="download-button mr-2" icon="fa fa-download"
+                pTooltip="{{'COMMON.ACTIONS.DOWNLOAD' | translate}}" tooltipPosition="top" life="4000"
+                (click)="downloadDocument(administrativeSource)">
+              </p-button>
+              <p-button type="button" class="view-button mr-2" icon="fa fa-search"
+                pTooltip="{{'COMMON.ACTIONS.VIEW' | translate}}" tooltipPosition="top" life="4000"
+                (click)="selectedDocument=null; viewSource(administrativeSource)"></p-button>
+              <p-button type="button" class="sign-button" icon="fa fa-key"
+                [hidden]="formVariables.isReadOnly || !formVariables.allowElectronicSignature || !administrativeSource.isElectronicSignatureNeeded"
+                pTooltip="{{'COMMON.ACTIONS.SIGN' | translate}}" tooltipPosition="top" life="4000"
+                (click)="selectedDocument=null; signPdfDocument(administrativeSource)"></p-button>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <div>{{'COMMON.LABELS.NO_RECORDS_FOUND' | translate}}</div>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>
+
+<!-- dialog -->
+<div #documentView>
+  <app-source *ngIf="selectedDocument" [task]="task" [viewSource]="displaySource" [selectedDocument]='selectedDocument'
+  [sources]='sources' (saveButtonClicked)="onSaveDocument($event)" (cancelButtonClicked)="selectedDocument = null" (datasLoaded)="scrollToViewer($event,documentView)"
+  [formVariables]="formVariables"></app-source>
+</div>
+
+<app-sub-type [task]="task" *ngIf="formVariables.administrativeSourceType" [formVariables]="formVariables"
+  (saveButtonClicked)="subTypeSaved()" (cancelButtonClicked)="handleCancelButton()"></app-sub-type>
